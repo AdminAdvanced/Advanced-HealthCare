@@ -11,15 +11,26 @@ class ProductCategory(models.Model):
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
-    _sql_constraints = [
-        ('default_code_uniq', 'unique(default_code)', 'Product code must be unique!')
-    ]
-
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
-            if not vals.get('default_code') and vals.get('categ_id'):
-                category = self.env['product.category'].browse(vals['categ_id'])
-                if category.x_product_sequence_id:
-                    vals['default_code'] = category.x_product_sequence_id.next_by_id()
+            # لا نولّد كود إذا كان موجود
+            if vals.get('default_code'):
+                continue
+
+            categ_id = vals.get('categ_id')
+            if not categ_id:
+                continue
+
+            category = self.env['product.category'].browse(categ_id).exists()
+            if not category:
+                continue
+
+            sequence = category.x_product_sequence_id
+            if not sequence:
+                continue
+
+            vals['default_code'] = sequence.next_by_id()
+
         return super().create(vals_list)
+
