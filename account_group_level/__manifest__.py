@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "product_categor_sequence",
+    'name': "account_group_level",
     'summary': "Short (1 phrase/line) summary of the module's purpose",
     'description': """
 Long description of module's purpose
@@ -9,9 +9,8 @@ Long description of module's purpose
     'website': "https://www.yourcompany.com",
     'category': 'Uncategorized',
     'version': '0.1',
-    'depends': ['base', 'product'],
+    'depends': ['base', 'account'],
     'data': [
-        'views/product.xml',
         'views/views.xml',
         'views/templates.xml',
     ],

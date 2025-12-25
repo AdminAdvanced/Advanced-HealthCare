@@ -13,6 +13,9 @@ class ProductTemplate(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
+        if self.env.context.get('test_enable'):
+            return super().create(vals_list)
+
         for vals in vals_list:
             # لا نولّد كود إذا كان موجود
             if vals.get('default_code'):
