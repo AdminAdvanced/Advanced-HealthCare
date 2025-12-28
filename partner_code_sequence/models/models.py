@@ -9,8 +9,8 @@ class ResPartner(models.Model):
         copy=False,
         index=True
     )
-    show_in_customer = fields.Boolean(compute='_compute_show_flags',store=True)
-    show_in_vendor = fields.Boolean(compute='_compute_show_flags',store=True)
+    show_in_customer = fields.Boolean(store=True)
+    show_in_vendor = fields.Boolean(store=True)
 
     _sql_constraints = [
         ('contact_code_unique', 'unique(contact_code)', 'Contact Code must be unique!')
