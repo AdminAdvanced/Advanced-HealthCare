@@ -14,5 +14,6 @@ Long description of module's purpose
         'views/views.xml',
         'views/templates.xml',
     ],
+    'license': 'LGPL-3',
 }
 
