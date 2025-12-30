@@ -11,8 +11,8 @@ Long description of module's purpose
     'version': '0.1',
     'depends': ['base', 'product'],
     'data': [
-        'views/product.xml',
         'views/views.xml',
+        'views/product.xml',
     ],
     "installable": True,
     "license": "LGPL-3",

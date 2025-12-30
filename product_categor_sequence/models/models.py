@@ -25,8 +25,8 @@ class ProductTemplate(models.Model):
             if not categ_id:
                 continue
 
-            category = self.env['product.category'].browse(categ_id).exists()
-            if not category:
+            category = self.env['product.category'].browse(categ_id)
+            if not category or not category.exists():
                 continue
 
             sequence = category.x_product_sequence_id
