@@ -5,16 +5,32 @@ class ResPartner(models.Model):
 
     contact_code = fields.Char(
         string='Contact Code',
-        readonly=True,
         copy=False,
         index=True
     )
-    show_in_customer = fields.Boolean(store=True)
-    show_in_vendor = fields.Boolean(store=True)
+    city_id = fields.Many2one(
+        'res.city',
+        string='City',
+        domain = "[('country_id', '=', country_id)]"
+    )
+    show_in_customer = fields.Boolean(compute='_compute_show_flags',store=True)
+    show_in_vendor = fields.Boolean(compute='_compute_show_flags',store=True)
 
     _sql_constraints = [
         ('contact_code_unique', 'unique(contact_code)', 'Contact Code must be unique!')
     ]
+
+    @api.depends('category_id')
+    def _compute_show_flags(self):
+        for partner in self:
+            partner.show_in_customer = False
+            partner.show_in_vendor = False
+
+            for cat in partner.category_id:
+                if cat.show_in_customer:
+                    partner.show_in_customer = True
+                if cat.show_in_vendor:
+                    partner.show_in_vendor = True
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -48,3 +64,5 @@ class ResPartnerCategory(models.Model):
     )
     show_in_customer = fields.Boolean("Show in Customer")
     show_in_vendor = fields.Boolean("Show in Vendor")
+
+

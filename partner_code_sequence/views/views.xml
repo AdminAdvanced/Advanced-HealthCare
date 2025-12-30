@@ -6,8 +6,23 @@
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='category_id']" position="after">
-                <field name="contact_code" readonly="1"/>
+                <field name="contact_code"/>
             </xpath>
+            <xpath expr="//field[@name='city']" position="replace">
+                <field name="city_id" placeholder="City" class=".o_address_city" style="width: 33%;"/>
+            </xpath>
+            <!--<xpath expr="//field[@name='street']/ancestor::group[1]" position="replace">
+                <group name="address" string="Address">
+                    <field name="country_id" placeholder="Country" class="o_address_city" nolabel="1"/>
+                    <group>
+                        <field name="state_id" placeholder="State" class="o_address_city" nolabel="1"/>
+                        <field name="city_id" placeholder="City" class="o_address_city" nolabel="1"/>
+                        <field name="zip" placeholder="Zip" class="o_address_city" nolabel="1"/>
+                    </group>
+                    <field name="street" placeholder="Street..." class="o_address_city" nolabel="1"/>
+                    <field name="street2" placeholder="Street 2..." class="o_address_city" nolabel="1"/>
+                </group>
+            </xpath>-->
         </field>
    </record>
   </data>
