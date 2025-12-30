@@ -13,7 +13,7 @@ class ProductTemplate(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
-        if self.env.registry.in_test_mode():
+        if self.env.context.get('test_enable') or self.env.registry.in_test_mode():
             return super().create(vals_list)
 
         for vals in vals_list:
