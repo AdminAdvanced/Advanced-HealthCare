@@ -16,7 +16,5 @@ Long description of module's purpose
     ],
     "installable": True,
     "license": "LGPL-3",
-    'auto_install': False,
-
 }
 
