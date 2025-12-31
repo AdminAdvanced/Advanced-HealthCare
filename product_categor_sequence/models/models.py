@@ -13,8 +13,8 @@ class ProductTemplate(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
-       # if self.env.context.get('test_enable'):
-        #    return super().create(vals_list)
+        if self.env.context.get('test_enable'):
+            return super().create(vals_list)
 
         for vals in vals_list:
             # لا نولّد كود إذا كان موجود
@@ -25,8 +25,8 @@ class ProductTemplate(models.Model):
             if not categ_id:
                 continue
 
-            category = self.env['product.category'].browse(categ_id).exists()
-            if not category:
+            category = self.env['product.category'].browse(categ_id)
+            if not category or not category.exists():
                 continue
 
             sequence = category.x_product_sequence_id
@@ -36,4 +36,5 @@ class ProductTemplate(models.Model):
             vals['default_code'] = sequence.next_by_id()
 
         return super().create(vals_list)
+
 
