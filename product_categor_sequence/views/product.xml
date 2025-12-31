@@ -11,13 +11,13 @@
                 <!-- Category: mandatory + readonly after save -->
                 <xpath expr="//field[@name='categ_id']" position="attributes">
                     <attribute name="required">1</attribute>
-                    <attribute name="readonly">id</attribute>
+                    <!--<attribute name="readonly">id</attribute>-->
                 </xpath>
 
-                <!-- Reference: readonly after save -->
+                <!-- Reference: readonly after save
                 <xpath expr="//field[@name='default_code']" position="attributes">
                     <attribute name="readonly">id</attribute>
-                </xpath>
+                </xpath>-->
 
             </field>
         </record>
