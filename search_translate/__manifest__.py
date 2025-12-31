@@ -9,7 +9,7 @@ Long description of module's purpose
     'website': "https://www.yourcompany.com",
     'category': 'Uncategorized',
     'version': '0.1',
-    'depends': ['base', "contacts"],
+    'depends': ['base', "contacts" ,"base_address_extended"],
     'data': [
         'views/views.xml',
         'views/templates.xml',
