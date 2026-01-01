@@ -1,6 +1,27 @@
 <odoo>
   <data>
-   <record id="view_partner_form_inherit_contact_code" model="ir.ui.view">
+      <record id="view_partner_form_inherit_contact_code_v2" model="ir.ui.view">
+            <field name="name">res.partner.form.inherit.contact.code.v2</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="priority">100</field>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='category_id']" position="after">
+                    <field name="contact_code"/>
+                </xpath>
+
+                <xpath expr="//field[@name='city_id']" position="replace">
+                    <field name="city_id"
+                           placeholder="City"
+                           class="o_address_city"
+                           style="width: 33%;"/>
+                </xpath>
+
+            </field>
+      </record>
+
+    <!--<record id="view_partner_form_inherit_contact_code" model="ir.ui.view">
         <field name="name">res.partner.form.inherit.contact.code</field>
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
@@ -11,7 +32,7 @@
             <xpath expr="//field[@name='city']" position="replace">
                 <field name="city_id" placeholder="City" class=".o_address_city" style="width: 33%;"/>
             </xpath>
-            <!--<xpath expr="//field[@name='street']/ancestor::group[1]" position="replace">
+           <xpath expr="//field[@name='street']/ancestor::group[1]" position="replace">
                 <group name="address" string="Address">
                     <field name="country_id" placeholder="Country" class="o_address_city" nolabel="1"/>
                     <group>
@@ -22,8 +43,8 @@
                     <field name="street" placeholder="Street..." class="o_address_city" nolabel="1"/>
                     <field name="street2" placeholder="Street 2..." class="o_address_city" nolabel="1"/>
                 </group>
-            </xpath>-->
+            </xpath>
         </field>
-   </record>
+   </record>-->
   </data>
 </odoo>
