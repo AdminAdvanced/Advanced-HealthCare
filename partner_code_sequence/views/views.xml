@@ -10,7 +10,7 @@
                 <xpath expr="//field[@name='category_id']" position="after">
                     <field name="contact_code"/>
                 </xpath>
-                <xpath expr="//sheet//group//field[@name='city']" position="replace">
+                <xpath expr="//field[@name='street']" position="after">
                     <field name="city_id" placeholder="City" class=".o_address_city" style="width:33%"/>
                 </xpath>
                 <xpath expr="//field[@name='city']" position="attributes">
