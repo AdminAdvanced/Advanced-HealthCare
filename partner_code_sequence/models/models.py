@@ -10,7 +10,7 @@ class ResPartner(models.Model):
     )
     city_id = fields.Many2one(
         'res.city',
-        string='City',
+        string='City.',
         domain = "[('country_id', '=', country_id)]"
     )
     show_in_customer = fields.Boolean(compute='_compute_show_flags',store=True)
