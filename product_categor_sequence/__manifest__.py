@@ -11,6 +11,7 @@ Long description of module's purpose
     'version': '0.1',
     'depends': ['base', 'product'],
     'data': [
+        'views/pharmaceutical_form_views.xml',
         'views/product.xml',
         'views/views.xml',
     ],
