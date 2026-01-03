@@ -27,7 +27,8 @@ class PharmaceuticalForm(models.Model):
 
     complete_name = fields.Char(
         compute='_compute_complete_name',
-        store=True
+        store=True,
+        recursive=True
     )
 
     _sql_constraints = [
