@@ -45,3 +45,63 @@ class ResPartner(models.Model):
 
         records = self.search(domain + args, limit=limit)
         return [(rec.id, rec.display_name) for rec in records]
+
+
+class AccountAccount(models.Model):
+    _inherit = 'account.account'
+
+    @api.model
+    def name_search(self, name='', args=None, operator='ilike', limit=100):
+        args = args or []
+
+        if name:
+            domain = [
+                '|',
+                ('name', operator, name),
+                ('x_studio_account_name_ar', operator, name),
+            ]
+        else:
+            domain = []
+
+        records = self.search(domain + args, limit=limit)
+        return [(rec.id, rec.display_name) for rec in records]
+
+
+class ResCountryState(models.Model):
+    _inherit = ['res.country.state']
+
+    @api.model
+    def name_search(self, name='', args=None, operator='ilike', limit=100):
+        args = args or []
+
+        if name:
+            domain = [
+                '|',
+                ('name', operator, name),
+                ('x_studio_state_name_ar', operator, name),
+            ]
+        else:
+            domain = []
+
+        records = self.search(domain + args, limit=limit)
+        return [(rec.id, rec.display_name) for rec in records]
+
+
+class ProductProduct(models.Model):
+    _inherit = 'product.product'
+
+    @api.model
+    def name_search(self, name='', args=None, operator='ilike', limit=100):
+        args = args or []
+
+        if name:
+            domain = [
+                '|',
+                ('name', operator, name),
+                ('x_studio_product_name_ar', operator, name),
+            ]
+        else:
+            domain = []
+
+        records = self.search(domain + args, limit=limit)
+        return [(rec.id, rec.display_name) for rec in records]
