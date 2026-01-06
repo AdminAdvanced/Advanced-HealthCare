@@ -1,4 +1,6 @@
 from odoo import models, fields, api
+from odoo.osv import expression
+
 
 class ResCity(models.Model):
     _inherit = 'res.city'
@@ -87,3 +89,20 @@ class ProductProduct(models.Model):
         return [(rec.id, rec.display_name) for rec in records]
 
 
+class AccountAccount(models.Model):
+    _inherit = 'account.account'
+
+    @api.model
+    def name_search(self, name='', args=None, operator='ilike', limit=100):
+        args = args or []
+
+        if name:
+            args = expression.AND([
+                args,
+                ['|',
+                 ('name', operator, name),
+                 ('x_studio_account_name_ar', operator, name)]
+            ])
+
+        records = self.search(args, limit=limit)
+        return [(rec.id, rec.display_name) for rec in records]
