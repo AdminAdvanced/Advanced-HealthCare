@@ -97,8 +97,8 @@ class ProductProduct(models.Model):
         if name:
             domain = [
                 '|',
-                ('name', operator, name),
-                ('x_studio_product_name_ar', operator, name),
+                ('product_tmpl_id.name', operator, name),
+                ('product_tmpl_id.x_studio_product_name_ar', operator, name),
             ]
         else:
             domain = []
