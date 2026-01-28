@@ -89,3 +89,5 @@ class ProductProduct(models.Model):
 
         records = self.search(domain + args, limit=limit)
         return [(rec.id, rec.display_name) for rec in records]
+
+
