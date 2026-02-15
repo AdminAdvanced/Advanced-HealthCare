@@ -79,10 +79,11 @@ class ProductProduct(models.Model):
 
         if name:
             domain = [
-                '|', '|',
+                '|', '|','|',
                 ('product_tmpl_id.name', operator, name),
                 ('product_tmpl_id.x_studio_product_name_ar', operator, name),
                 ('default_code', operator, name),  # كود المنتج
+                ('x_studio_sku', operator, name),
             ]
         else:
             domain = []
