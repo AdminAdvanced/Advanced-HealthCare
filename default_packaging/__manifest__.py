@@ -9,6 +9,8 @@ Long description of module's purpose
     'website': "https://www.yourcompany.com",
     'category': 'Uncategorized',
     'version': '0.1',
+    'license': 'LGPL-3',
+    "installable": True,
     'depends': ['base',"product","stock","sale", 'purchase'],
     'data': [
         'views/views.xml',
