@@ -77,24 +77,28 @@ class ProductProduct(models.Model):
 from odoo.osv import expression
 
 class ProductProduct(models.Model):
-    _inherit = 'product.product'
+   _inherit = 'product.template'
 
-     @api.model
-    def _search(self, args, offset=0, limit=None, order=None, count=False):
+    @api.model
+    def _name_search(self, name='', args=None, operator='ilike', limit=100, order=None):
+        args = args or []
 
-        search_term = self._context.get('search_default_name') or self._context.get('name')
-
-        if search_term:
+        if name:
             domain = [
-                '|', '|', '|', '|', '|',
-                ('name', 'ilike', search_term),
-                ('product_tmpl_id.name', 'ilike', search_term),
-                ('product_tmpl_id.x_studio_product_name_ar', 'ilike', search_term),
-                ('default_code', 'ilike', search_term),
-                ('x_studio_sku', 'ilike', search_term),
-                ('product_tmpl_id.x_studio_sku', 'ilike', search_term),
+                '|', '|', '|', '|',
+                ('name', operator, name),
+                ('x_studio_product_name_ar', operator, name),
+                ('default_code', operator, name),
+                ('product_variant_ids.default_code', operator, name),
+                ('product_variant_ids.x_studio_sku', operator, name),
             ]
 
             args = expression.AND([domain, args])
 
-        return super()._search(args, offset=offset, limit=limit, order=order, count=count)
+        return super()._name_search(
+            name=name,
+            args=args,
+            operator=operator,
+            limit=limit,
+            order=order,
+        )
