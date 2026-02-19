@@ -77,11 +77,13 @@ class ProductProduct(models.Model):
     def _name_search(self, name='', args=None, operator='ilike', limit=100, order=None):
         args = args or []
 
-                if name:
+        if name:
             domain = [
-                '|', '|', '|', 
+                '|', '|', '|', '|', '|',
                 ('product_tmpl_id.name', operator, name),
                 ('product_tmpl_id.x_studio_product_name_ar', operator, name),
+                ('name', operator, name),
+                ('x_studio_product_name_ar', operator, name),
                 ('default_code', operator, name),
                 ('x_studio_sku', operator, name),
             ]
