@@ -79,27 +79,22 @@ from odoo.osv import expression
 class ProductProduct(models.Model):
     _inherit = 'product.product'
 
-    @api.model
-    def _base_name_search(self, name='', args=None, operator='ilike', limit=100, order=None):
-        args = args or []
+     @api.model
+    def _search(self, args, offset=0, limit=None, order=None, count=False):
 
-        if name:
+        search_term = self._context.get('search_default_name') or self._context.get('name')
+
+        if search_term:
             domain = [
                 '|', '|', '|', '|', '|',
-                ('name', operator, name),
-                ('product_tmpl_id.name', operator, name),
-                ('product_tmpl_id.x_studio_product_name_ar', operator, name),
-                ('default_code', operator, name),
-                ('x_studio_sku', operator, name),
-                ('product_tmpl_id.x_studio_sku', operator, name),
+                ('name', 'ilike', search_term),
+                ('product_tmpl_id.name', 'ilike', search_term),
+                ('product_tmpl_id.x_studio_product_name_ar', 'ilike', search_term),
+                ('default_code', 'ilike', search_term),
+                ('x_studio_sku', 'ilike', search_term),
+                ('product_tmpl_id.x_studio_sku', 'ilike', search_term),
             ]
 
             args = expression.AND([domain, args])
 
-        return super()._base_name_search(
-            name=name,
-            args=args,
-            operator=operator,
-            limit=limit,
-            order=order,
-        )
+        return super()._search(args, offset=offset, limit=limit, order=order, count=count)
