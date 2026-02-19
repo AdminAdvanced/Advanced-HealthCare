@@ -76,17 +76,21 @@ class ProductProduct(models.Model):
     @api.model
     def _name_search(self, name='', args=None, operator='ilike', limit=100, order=None):
         args = args or []
+        import logging
+        _logger = logging.getLogger(__name__)
+        _logger.warning("🔥🔥 _name_search CALLED 🔥🔥")
 
         if name:
             domain = [
                 '|', '|', '|', '|', '|',
+                ('name', operator, name),
                 ('product_tmpl_id.name', operator, name),
                 ('product_tmpl_id.x_studio_product_name_ar', operator, name),
-                ('name', operator, name),
-                ('x_studio_product_name_ar', operator, name),
                 ('default_code', operator, name),
                 ('x_studio_sku', operator, name),
+                ('product_tmpl_id.x_studio_sku', operator, name),
             ]
+
             args = expression.AND([domain, args])
 
         return self._search(args, limit=limit, order=order)
