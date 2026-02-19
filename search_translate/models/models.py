@@ -85,12 +85,11 @@ class ProductProduct(models.Model):
 
         if name:
             domain = [
-                '|', '|', '|', '|',
+                '|', '|', '|',
                 ('name', operator, name),
                 ('x_studio_product_name_ar', operator, name),
                 ('default_code', operator, name),
-                ('product_variant_ids.default_code', operator, name),
-                ('product_variant_ids.x_studio_sku', operator, name),
+                ('x_studio_sku', operator, name),
             ]
 
             args = expression.AND([domain, args])
