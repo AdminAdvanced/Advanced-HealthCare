@@ -73,20 +73,10 @@ class ResCountryState(models.Model):
 class ProductProduct(models.Model):
     _inherit = 'product.product'
 
-    @api.model
-    def _name_search(self, name='', args=None, operator='ilike', limit=100, order=None):
-        args = args or []
+    from odoo import models, api
+from odoo.osv import expression
 
-        if name:
-            domain = [
-                '|', '|', '|', '|', '|',
-                ('product_tmpl_id.name', operator, name),
-                ('product_tmpl_id.x_studio_product_name_ar', operator, name),
-                ('name', operator, name),
-                ('x_studio_product_name_ar', operator, name),
-                ('default_code', operator, name),
-                ('x_studio_sku', operator, name),
-            ]
-            args = expression.AND([domain, args])
+class ProductProduct(models.Model):
+   _inherit = 'product.template'
 
-        return self._search(args, limit=limit, order=order)
+    
