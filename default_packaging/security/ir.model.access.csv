@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_default_packaging_default_packaging,default_packaging.default_packaging,model_default_packaging_default_packaging,base.group_user,1,1,1,1
