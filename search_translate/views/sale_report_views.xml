@@ -1,31 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-<record id="sale_report_search_inherit_employee" model="ir.ui.view">
-    <field name="name">sale.report.search.employee</field>
-    <field name="model">sale.report</field>
-    <field name="inherit_id" ref="sale.view_order_product_search"/>
-    <field name="arch" type="xml">
+    <record id="sale_report_search_inherit_employee" model="ir.ui.view">
+        <field name="name">sale.report.search.employee</field>
+        <field name="model">sale.report</field>
+        <field name="inherit_id" ref="sale.view_order_product_search"/>
+        <field name="arch" type="xml">
 
-        <xpath expr="//search" position="inside">
-            <field name="x_studio_salesman"/>
-            <field name="x_studio_sales_manager"/>
-        </xpath>
+            <!-- إضافة الحقول للبحث -->
+            <xpath expr="//field[@name='industry_id']" position="after">
+                <field name="x_studio_salesman"/>
+                <field name="x_studio_sales_manager"/>
+            </xpath>
 
-        <xpath expr="//filter[@name='salesperson']" position="after">
+            <!-- إضافة Group By -->
+            <xpath expr="//group[@string='Group By']" position="inside">
 
-            <filter
-                name="group_salesman"
-                string="Salesman"
-                context="{'group_by':'x_studio_salesman'}"/>
+                <filter
+                    name="group_salesman"
+                    string="Salesman"
+                    context="{'group_by':'x_studio_salesman'}"/>
 
-            <filter
-                name="group_sales_manager"
-                string="Sales Manager"
-                context="{'group_by':'x_studio_sales_manager'}"/>
+                <filter
+                    name="group_sales_manager"
+                    string="Sales Manager"
+                    context="{'group_by':'x_studio_sales_manager'}"/>
 
-        </xpath>
+            </xpath>
 
-    </field>
-</record>
+        </field>
+    </record>
+
 </odoo>
