@@ -4,7 +4,7 @@
 <record id="sale_report_search_inherit_employee" model="ir.ui.view">
     <field name="name">sale.report.search.employee</field>
     <field name="model">sale.report</field>
-    <field name="inherit_id" ref="sale.view_order_report_search"/>
+    <field name="inherit_id" ref="sale.view_order_product_search"/>
     <field name="arch" type="xml">
 
         <xpath expr="//search" position="inside">
