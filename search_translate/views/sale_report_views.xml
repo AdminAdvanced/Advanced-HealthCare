@@ -7,14 +7,12 @@
         <field name="inherit_id" ref="sale.view_order_product_search"/>
         <field name="arch" type="xml">
 
-            <!-- إضافة الحقول للبحث -->
             <xpath expr="//field[@name='industry_id']" position="after">
                 <field name="x_studio_salesman"/>
                 <field name="x_studio_sales_manager"/>
             </xpath>
 
-            <!-- إضافة Group By -->
-            <xpath expr="//group[@string='Group By']" position="inside">
+            <xpath expr="//search/group[2]" position="inside">
 
                 <filter
                     name="group_salesman"
