@@ -9,10 +9,12 @@ Long description of module's purpose
     'website': "https://www.yourcompany.com",
     'category': 'Uncategorized',
     'version': '0.1',
-    'depends': ['base', "contacts" ,"base_address_extended"],
+    'depends': ['base', "contacts" ,"base_address_extended", 'sale',
+    'hr',],
     'data': [
         'views/views.xml',
         'views/templates.xml',
+        'views/sale_report_views.xml',
     ],
     "installable": True,
     "license": "LGPL-3",
