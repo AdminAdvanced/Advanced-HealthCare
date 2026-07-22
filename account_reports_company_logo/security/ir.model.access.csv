@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_reports_company_logo_account_reports_company_logo,account_reports_company_logo.account_reports_company_logo,model_account_reports_company_logo_account_reports_company_logo,base.group_user,1,1,1,1
