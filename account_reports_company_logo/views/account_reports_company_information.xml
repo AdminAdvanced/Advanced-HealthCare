@@ -1,18 +1,32 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <template id="account_reports_company_information_logo"
-              inherit_id="account_reports.company_information">
+    <!-- Accounting Reports -->
+    <template id="pdf_export_main_logo"
+              inherit_id="account_reports.pdf_export_main">
 
-        <!-- Add company logo before company information -->
-        <xpath expr="//div[@class='row']" position="before">
+        <xpath expr="//header/div[hasclass('o_title')]" position="before">
 
-            <div class="text-center mb-3">
-
+            <div class="d-flex justify-content-end mb-4">
                 <img t-if="env.company.logo"
                      t-att-src="'/web/image/res.company/%s/logo' % env.company.id"
-                     style="max-height:90px; max-width:250px;"/>
+                     style="max-height:90px; max-width:220px;"/>
+            </div>
 
+        </xpath>
+
+    </template>
+
+    <!-- Customer Statement -->
+    <template id="pdf_export_main_customer_logo"
+              inherit_id="account_reports.pdf_export_main_customer_report">
+
+        <xpath expr="//header/div[hasclass('o_title')]" position="before">
+
+            <div class="d-flex justify-content-end mb-4">
+                <img t-if="env.company.logo"
+                     t-att-src="'/web/image/res.company/%s/logo' % env.company.id"
+                     style="max-height:90px; max-width:220px;"/>
             </div>
 
         </xpath>
