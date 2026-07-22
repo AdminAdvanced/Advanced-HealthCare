@@ -1,29 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-    <template id="account_reports_internal_layout_logo"
-              inherit_id="account_reports.internal_layout">
+    <template id="company_information_logo"
+              inherit_id="account_reports.company_information">
 
-        <xpath expr="//div[contains(@class,'article')]" position="before">
+        <xpath expr="//div[@class='row']" position="before">
 
-            <div class="d-flex justify-content-between align-items-center mb-4">
-
-                <div>
-                    <img t-if="env.company.logo"
-                         t-att-src="'/web/image/res.company/%s/logo' % env.company.id"
-                         style="max-height:80px; max-width:220px;"/>
-                </div>
-
-                <div class="text-end">
-                    <h4 class="mb-0" t-out="env.company.name"/>
-                    <div t-field="env.company.partner_id"
-                         t-options='{"widget":"contact","fields":["address"],"no_marker":True}'/>
-                    <div>
-                        <strong>VAT:</strong>
-                        <span t-out="env.company.vat"/>
-                    </div>
-                </div>
-
+            <div class="mb-3">
+                <img t-if="env.company.logo"
+                     t-att-src="'/web/image/res.company/%s/logo' % env.company.id"
+                     style="max-height:70px;"/>
             </div>
 
         </xpath>
