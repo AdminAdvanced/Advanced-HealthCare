@@ -15,7 +15,6 @@ Long description of module's purpose
         'views/views.xml',
         'views/templates.xml',
         'views/sale_report_views.xml',
-        'views/account_reports_logo.xml',
     ],
     "installable": True,
     "license": "LGPL-3",

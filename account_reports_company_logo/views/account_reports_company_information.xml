@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-    <template id="company_information_logo"
+    <template id="account_reports_company_information_logo"
               inherit_id="account_reports.company_information">
 
+        <!-- Add company logo before company information -->
         <xpath expr="//div[@class='row']" position="before">
 
-            <div class="mb-3">
+            <div class="text-center mb-3">
+
                 <img t-if="env.company.logo"
                      t-att-src="'/web/image/res.company/%s/logo' % env.company.id"
-                     style="max-height:70px;"/>
+                     style="max-height:90px; max-width:250px;"/>
+
             </div>
 
         </xpath>
