@@ -68,9 +68,7 @@ class SupSalesOrder(models.Model):
                 rec.line_ids.mapped("subtotal")
             )
 
-
-
-    @api.model
+    @api.model_create_multi
     def create(self, vals):
 
         if vals.get("name") == "New":

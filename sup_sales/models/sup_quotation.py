@@ -149,16 +149,18 @@ class SupQuotation(models.Model):
         for rec in self:
             rec.total_amount = sum(rec.line_ids.mapped("subtotal"))
 
-    @api.model
-    def create(self, vals):
 
-        if vals.get("name", "New") == "New":
-            seq = self.env["ir.sequence"].next_by_code(
-                "sup.sales.quotation"
-            )
-            vals["name"] = seq or "New"
+    @api.model_create_multi
+    def create(self, vals_list):
 
-        return super().create(vals)
+        for vals in vals_list:
+            if vals.get("name", "New") == "New":
+                vals["name"] = (
+                        self.env["ir.sequence"].next_by_code(
+                            "sup.sales.quotation"
+                        ) or "New"
+                )
+        return super().create(vals_list)
 
     def action_send(self):
         self.write({"state": "sent"})
@@ -174,11 +176,6 @@ class SupQuotation(models.Model):
             "sup_sales.action_report_sup_quotation"
         ).report_action(self)
 
-    def action_print(self):
-
-        return self.env.ref(
-            "sup_sales.action_report_sup_quotation"
-        ).report_action(self)
 
 class SupQuotationLine(models.Model):
 

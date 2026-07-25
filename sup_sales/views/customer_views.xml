@@ -206,22 +206,22 @@
 
                             <!-- Contact -->
                             <div t-if="record.phone.raw_value">
-                                <i class="fa fa-phone me-1"/>
+                                <i class="fa fa-phone me-1" title="phone"/>
                                 <field name="phone"/>
                             </div>
 
                             <div t-if="record.mobile.raw_value">
-                                <i class="fa fa-mobile me-1"/>
+                                <i class="fa fa-mobile me-1" title="mobile"/>
                                 <field name="mobile"/>
                             </div>
 
                             <div t-if="record.email.raw_value">
-                                <i class="fa fa-envelope me-1"/>
+                                <i class="fa fa-envelope me-1" title="email"/>
                                 <field name="email"/>
                             </div>
 
                             <div t-if="record.city.raw_value">
-                                <i class="fa fa-map-marker me-1"/>
+                                <i class="fa fa-map-marker me-1" title="city"/>
                                 <field name="city"/>
                                 <t t-if="record.country_id.raw_value">
                                     ,

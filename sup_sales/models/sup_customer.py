@@ -33,6 +33,7 @@ class SupCustomer(models.Model):
         required=True,
         copy=False,
         readonly=True,
+        default="New",
     )
 
     street = fields.Char(
@@ -160,13 +161,15 @@ class SupCustomer(models.Model):
                 ("customer_id", "=", rec.id)
             ])
 
-    @api.model
-    def create(self, vals):
+    @api.model_create_multi
+    def create(self, vals_list):
 
-        if vals.get("code", "New") == "New":
-            seq = self.env["ir.sequence"].next_by_code(
-                "sup.customer"
-            )
-            vals["code"] = seq or "New"
+        for vals in vals_list:
+            if vals.get("code", "New") == "New":
+                vals["code"] = (
+                        self.env["ir.sequence"].next_by_code(
+                            "sup.customer"
+                        ) or "New"
+                )
 
-        return super().create(vals)
+        return super().create(vals_list)
