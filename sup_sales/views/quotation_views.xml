@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="sup_quotation_tree" model="ir.ui.view">
+
+        <field name="name">sup.sales.quotation.tree</field>
+
+        <field name="model">sup.sales.quotation</field>
+
+        <field name="arch" type="xml">
+
+            <list>
+
+                <field name="name"/>
+
+                <field name="customer_id"/>
+
+                <field name="quotation_date"/>
+
+                <field name="expiration_date"/>
+
+                <field name="salesman_id"/>
+
+                <field name="amount_total"/>
+
+                <field name="state"
+                       widget="badge"
+                       decoration-info="state=='draft'"
+                       decoration-warning="state=='sent'"
+                       decoration-success="state=='sale'"
+                       decoration-danger="state=='cancel'"/>
+
+            </list>
+
+        </field>
+
+    </record>
+
+    <record id="sup_quotation_form" model="ir.ui.view">
+        <field name="name">sup.sales.quotation.form</field>
+        <field name="model">sup.sales.quotation</field>
+
+        <field name="arch" type="xml">
+
+            <form string="Quotation">
+
+                <header>
+                    <button
+                        name="action_print"
+                        string="Print"
+                        type="object"
+                        class="btn-secondary"/>
+
+                    <button name="action_send"
+                            string="Send by Email"
+                            type="object"
+                            class="btn-primary"
+                            invisible="state != 'draft'"/>
+
+                    <button name="action_confirm"
+                            string="Confirm"
+                            type="object"
+                            class="btn-primary"
+                            invisible="state != 'sent'"/>
+
+                    <button name="action_print"
+                            string="Print"
+                            type="object"
+                            class="btn-secondary"/>
+
+                    <button name="action_cancel"
+                            string="Cancel"
+                            type="object"
+                            invisible="state == 'cancel'"/>
+
+                    <field name="state"
+                           widget="statusbar"
+                           statusbar_visible="draft,sent,sale"/>
+
+                </header>
+
+                <sheet>
+
+                    <div class="oe_title">
+
+                        <h1>
+
+                            <field name="name" readonly="1"/>
+
+                        </h1>
+
+                    </div>
+
+                    <group>
+
+                        <group>
+
+                            <field name="customer_id"/>
+
+                            <field name="invoice_address_id"/>
+
+                            <field name="delivery_address_id"/>
+
+                            <field name="partner_ref"/>
+
+                        </group>
+
+                        <group>
+
+                            <field name="quotation_date"/>
+
+                            <field name="expiration_date"/>
+
+                            <field name="pricelist"/>
+
+                            <field name="payment_terms"/>
+
+                        </group>
+
+                    </group>
+
+                    <notebook>
+
+                        <page string="Order Lines">
+
+                            <field name="line_ids">
+
+                                <list editable="bottom">
+
+                                    <field name="product_id"/>
+
+                                    <field name="description"/>
+
+                                    <field name="product_uom_qty"/>
+
+                                    <field name="price_unit"/>
+
+                                    <field name="discount"/>
+
+                                    <field name="tax_ids"
+                                           widget="many2many_tags"/>
+
+                                    <field name="price_subtotal"
+                                           readonly="1"/>
+
+                                </list>
+
+                            </field>
+
+                        </page>
+
+                        <page string="Other Information">
+
+                            <group>
+
+                                <group>
+
+                                    <field name="salesman_id"/>
+
+                                    <field name="sales_manager_id"/>
+
+                                </group>
+
+                            </group>
+
+                        </page>
+
+                        <page string="Terms">
+
+                            <field name="note"
+                                   placeholder="Terms and Conditions..."/>
+
+                        </page>
+
+                    </notebook>
+
+                    <group class="oe_subtotal_footer oe_right">
+
+                        <field name="amount_untaxed"/>
+
+                        <field name="amount_tax"/>
+
+                        <field name="amount_total"
+                               class="oe_subtotal_footer_separator"/>
+
+                    </group>
+
+                </sheet>
+
+                <chatter/>
+
+            </form>
+
+        </field>
+
+    </record>
+
+    <record id="action_sup_quotation" model="ir.actions.act_window">
+        <field name="name">Quotations</field>
+        <field name="res_model">sup.sales.quotation</field>
+        <field name="view_mode">list,kanban,form</field>
+    </record>
+
+</odoo>
