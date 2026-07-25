@@ -52,7 +52,7 @@
                         class="btn-secondary"/>
 
                     <button name="action_send"
-                            string="Send by Email"
+                            string="Send"
                             type="object"
                             class="btn-primary"
                             invisible="state != 'draft'"/>
@@ -62,11 +62,6 @@
                             type="object"
                             class="btn-primary"
                             invisible="state != 'sent'"/>
-
-                    <button name="action_print"
-                            string="Print"
-                            type="object"
-                            class="btn-secondary"/>
 
                     <button name="action_cancel"
                             string="Cancel"
