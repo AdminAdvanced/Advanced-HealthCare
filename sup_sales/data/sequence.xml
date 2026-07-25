@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <record id="seq_sup_quotation" model="ir.sequence">
+        <field name="name">SUP Quotation</field>
+        <field name="code">sup.sales.quotation</field>
+        <field name="prefix">SOE/</field>
+        <field name="padding">5</field>
+    </record>
+
+    <record id="seq_sup_order" model="ir.sequence">
+        <field name="name">SUP Sales Order</field>
+        <field name="code">sup.sales.order</field>
+        <field name="prefix">SO/</field>
+        <field name="padding">5</field>
+    </record>
+
+    <record id="sup_customer" model="ir.sequence">
+        <field name="name">SUP Customer</field>
+        <field name="code">sup.customer</field>
+        <field name="prefix">S/CUS/</field>
+        <field name="padding">5</field>
+    </record>
+
+</odoo>

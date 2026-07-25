@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+
+
+    <!-- Main Menu -->
+
+
+    <menuitem
+        id="sup_sales_root"
+        name="SUP Sales"
+        sequence="10"
+    />
+
+
+
+
+    <!-- Customers -->
+
+
+    <menuitem
+        id="sup_sales_customer_menu"
+        name="Customers"
+        parent="sup_sales_root"
+        action="action_sup_customer"
+        sequence="1"
+    />
+
+
+
+    <!-- Sales -->
+
+
+    <menuitem
+        id="sup_sales_order_menu"
+        name="Sales"
+        parent="sup_sales_root"
+        sequence="2"
+    />
+
+
+
+    <!-- Quotations -->
+
+
+    <menuitem
+        id="sup_sales_quotation_menu"
+        name="Quotations"
+        parent="sup_sales_order_menu"
+        action="action_sup_quotation"
+        sequence="1"
+    />
+
+
+
+    <!-- Orders
+
+
+    <menuitem
+        id="sup_sales_order_submenu"
+        name="Sales Orders"
+        parent="sup_sales_order_menu"
+        action="action_sup_order"
+        sequence="2"
+    />-->
+
+
+
+</odoo>

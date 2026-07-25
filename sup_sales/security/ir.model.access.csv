@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sup_quotation,sup.sales.quotation,model_sup_sales_quotation,base.group_user,1,1,1,1
+access_sup_quotation_line,sup.sales.quotation.line,model_sup_sales_quotation_line,base.group_user,1,1,1,1
+access_sup_order,sup.sales.order,model_sup_sales_order,base.group_user,1,1,1,1
+access_sup_order_line,sup.sales.order.line,model_sup_sales_order_line,base.group_user,1,1,1,1
+access_sup_customer,sup.sales.customer,model_sup_sales_customer,base.group_user,1,1,1,1
