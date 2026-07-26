@@ -136,4 +136,23 @@
 
     </template>
 
+
+    <!--  اضافه الوحده بالعربي للجدول  -->
+    <template id="invoice_quantity_uom"
+              inherit_id="l10n_gcc_invoice.arabic_english_invoice"
+              priority="99">
+
+        <xpath expr="//td[@class='o_td_quantity text-end']" position="replace">
+
+            <td class="o_td_quantity text-end">
+                <span t-field="line.quantity"/>
+                <span t-field="line.product_uom_id"/>
+                /
+                <span t-field="line.product_uom_id.x_studio_unit_of_measure_ar"/>
+            </td>
+
+        </xpath>
+
+    </template>
+
 </odoo>
