@@ -5,10 +5,11 @@
               inherit_id="l10n_gcc_invoice.arabic_english_invoice"
               priority="99">
 
-        <xpath expr="//div[hasclass('invoice_main')]" position="before">
+        <xpath expr="//t[@t-set='address']/address" position="after">
 
-            <div style="background:red;color:white;font-size:30px">
-                TEST
+            <div t-if="o.partner_id.x_studio_name_ar"
+                 style="text-align:right; direction:rtl;">
+                <span t-field="o.partner_id.x_studio_name_ar"/>
             </div>
 
         </xpath>
