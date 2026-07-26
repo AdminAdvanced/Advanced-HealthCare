@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
+
     <template id="invoice_report_custom"
-              inherit_id="account.report_invoice_document"
+              inherit_id="l10n_gcc_invoice.arabic_english_invoice"
               priority="99">
 
         <xpath expr="//div[hasclass('invoice_main')]" position="before">
+
             <div style="background:red;color:white;font-size:30px">
                 TEST
             </div>
+
         </xpath>
 
     </template>
+
 </odoo>
