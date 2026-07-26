@@ -178,7 +178,6 @@
               priority="99">
 
         <xpath expr="//th[@name='th_description']" position="after">
-
             <th name="th_lot" class="text-end fw-bold">
                 <span>SN/Lot</span>
                 <br/>
@@ -196,8 +195,7 @@
 
                 <t t-foreach="lot_values" t-as="lot">
 
-                    <t t-if="lot['product_id'] == line.product_id.id">
-
+                    <t t-if="lot['lot_id'] and env['stock.lot'].browse(lot['lot_id']).product_id.id == line.product_id.id">
                         <span t-esc="lot['lot_name']"/>
                         <br/>
 
