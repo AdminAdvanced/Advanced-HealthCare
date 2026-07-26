@@ -4,6 +4,23 @@
     <template id="invoice_report_custom"
               inherit_id="account.report_invoice_document">
 
+        <xpath expr="//div[@id='informations']" position="before">
+
+            <h1 style="color:red">
+                TEST
+            </h1>
+
+        </xpath>
+
+    </template>
+
+</odoo>
+ <!--<odoo>
+
+    اضافه اسم العميل بالعربي
+    <template id="invoice_report_custom"
+              inherit_id="account.report_invoice_document">
+
         <xpath expr="//address[@t-field='o.partner_id']"
                position="after">
 
@@ -18,4 +35,4 @@
 
     </template>
 
-</odoo>
+</odoo>-->
