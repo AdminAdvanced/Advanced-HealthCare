@@ -41,15 +41,15 @@
               inherit_id="l10n_sa.arabic_english_invoice"
               priority="99">
 
-        <xpath expr="//img[contains(@t-att-src, 'barcode_type=%s')]" position="attributes">
+        <xpath expr="//img[contains(@t-att-src, 'barcode_type')]" position="attributes">
 
-            <attribute name="t-att-src">
-                "'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', quote_plus(o.l10n_sa_qr_code_str), 70, 70)"
+            <attribute name="style">
+                width:80px !important;
+                height:80px !important;
             </attribute>
 
         </xpath>
 
     </template>
-
 
 </odoo>
