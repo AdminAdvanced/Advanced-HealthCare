@@ -142,8 +142,7 @@
               inherit_id="l10n_gcc_invoice.arabic_english_invoice"
               priority="99">
 
-        <xpath expr="//td[@class='o_td_quantity text-end']" position="replace">
-
+        <xpath expr="//td[hasclass('o_td_quantity')]" position="replace">
             <td class="o_td_quantity text-end">
                 <span t-field="line.quantity"/>
                 <span t-field="line.product_uom_id"/>
