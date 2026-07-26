@@ -52,4 +52,47 @@
 
     </template>
 
+
+    <!--   توسيط البيانات و تعديل مكان title en  -->
+    <template id="invoice_info_alignment"
+              inherit_id="l10n_gcc_invoice.arabic_english_invoice"
+              priority="99">
+
+        <!-- English titles -->
+        <xpath expr="//div[@name='invoice_date']/div[1]" position="attributes">
+            <attribute name="class">col-2 offset-6 text-start</attribute>
+        </xpath>
+
+        <xpath expr="//div[@name='due_date']/div[1]" position="attributes">
+            <attribute name="class">col-2 offset-6 text-start</attribute>
+        </xpath>
+
+        <xpath expr="//div[@name='origin']/div[1]" position="attributes">
+            <attribute name="class">col-2 offset-6 text-start</attribute>
+        </xpath>
+
+        <xpath expr="//div[@name='reference']/div[1]" position="attributes">
+            <attribute name="class">col-2 offset-6 text-start</attribute>
+        </xpath>
+
+        <!-- Values -->
+        <xpath expr="//div[@name='invoice_date']/div[2]" position="attributes">
+            <attribute name="class">col-2 text-center</attribute>
+        </xpath>
+
+        <xpath expr="//div[@name='due_date']/div[2]" position="attributes">
+            <attribute name="class">col-2 text-center</attribute>
+        </xpath>
+
+        <xpath expr="//div[@name='origin']/div[2]" position="attributes">
+            <attribute name="class">col-2 text-center</attribute>
+        </xpath>
+
+        <xpath expr="//div[@name='reference']/div[2]" position="attributes">
+            <attribute name="class">col-2 text-center</attribute>
+        </xpath>
+
+    </template>
+
+
 </odoo>
