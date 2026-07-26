@@ -229,4 +229,13 @@
         </xpath>
     </template>
 
+    <template id="remove_bottom_lot_table"
+              inherit_id="l10n_gcc_invoice_stock_account.arabic_english_invoice_with_snln"
+              priority="999">
+
+        <xpath expr="//table[@name='invoice_snln_table']"
+               position="replace"/>
+
+    </template>
+
 </odoo>
