@@ -14,6 +14,7 @@
         ],
     },
     'data': [
+        'data/paperformat.xml',
         'views/invoice_report.xml',
     ],
     'installable': True,
