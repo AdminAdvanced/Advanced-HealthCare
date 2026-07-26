@@ -177,27 +177,34 @@
               inherit_id="l10n_gcc_invoice.arabic_english_invoice"
               priority="99">
 
-        <xpath expr="//th[@name='th_subtotal']" position="before">
+
+        <!-- Add Lot columns after Description header -->
+        <xpath expr="//th[@name='th_description']" position="after">
+
             <th name="th_lot" class="text-end fw-bold">
                 <span>SN/Lot</span>
                 <br/>
                 <span>رقم التسلسل/لوت</span>
             </th>
-             <th name="th_lot_qty" class="text-end fw-bold">
+
+            <th name="th_lot_qty" class="text-end fw-bold">
                 <span>Lot Qty</span>
                 <br/>
                 <span>كمية اللوت</span>
             </th>
+
         </xpath>
 
 
-        <!-- Add columns after Description -->
-        <xpath expr="//td[span[@t-field='line.price_subtotal']]" position="before">
+        <!-- Add Lot data after Description column -->
+        <xpath expr="//td[@name='account_invoice_line_name']" position="after">
 
+
+            <!-- Lot Number -->
             <td class="text-center">
 
                 <t t-set="lots"
-                   t-value="o.get_invoice_line_lots(line)"/>
+                   t-value="o.get_invoice_line_lots(line) or []"/>
 
                 <t t-foreach="lots" t-as="lot">
 
@@ -209,10 +216,12 @@
 
             </td>
 
+
+            <!-- Lot Quantity -->
             <td class="text-center">
 
                 <t t-set="lots"
-                   t-value="o.get_invoice_line_lots(line)"/>
+                   t-value="o.get_invoice_line_lots(line) or []"/>
 
                 <t t-foreach="lots" t-as="lot">
 
@@ -227,8 +236,11 @@
 
 
         </xpath>
+
+
     </template>
 
+    <!-- حذف تيبل اللوت  -->
     <template id="remove_bottom_lot_table"
               inherit_id="l10n_gcc_invoice_stock_account.arabic_english_invoice_with_snln"
               priority="999">
