@@ -36,20 +36,5 @@
     </template>
 
 
-    <!-- تصغير حجم QR Code  -->
-    <template id="invoice_qr_size_custom"
-              inherit_id="l10n_sa.arabic_english_invoice"
-              priority="99">
-
-        <xpath expr="//img[contains(@t-att-src, 'barcode_type')]" position="attributes">
-
-            <attribute name="style">
-                width:80px !important;
-                height:80px !important;
-            </attribute>
-
-        </xpath>
-
-    </template>
 
 </odoo>
