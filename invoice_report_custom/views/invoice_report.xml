@@ -1,23 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<odoo>
+ <odoo>
 
-    <template id="invoice_report_custom"
-              inherit_id="account.report_invoice_document">
-
-        <xpath expr="//div[@id='informations']" position="before">
-
-            <h1 style="color:red">
-                TEST
-            </h1>
-
-        </xpath>
-
-    </template>
-
-</odoo>
- <!--<odoo>
-
-    اضافه اسم العميل بالعربي
+    <!--  اضافه اسم العميل بالعربي  -->
     <template id="invoice_report_custom"
               inherit_id="account.report_invoice_document">
 
@@ -35,4 +19,4 @@
 
     </template>
 
-</odoo>-->
+</odoo>
