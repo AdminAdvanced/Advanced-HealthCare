@@ -9,6 +9,7 @@
 
     "depends": [
         "account_reports",
+        "account",
     ],
 
     "data": [
