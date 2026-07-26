@@ -171,4 +171,43 @@
 
     </template>
 
+
+    <!--  add lot  -->
+    <template id="invoice_lot_column"
+              inherit_id="l10n_gcc_invoice.arabic_english_invoice"
+              priority="99">
+
+        <xpath expr="//th[@name='th_description']" position="after">
+
+            <th name="th_lot" class="text-end fw-bold">
+                <span>SN/Lot</span>
+                <br/>
+                <span>رقم التسلسل/لوت</span>
+            </th>
+
+        </xpath>
+
+
+        <xpath expr="//td[@name='account_invoice_line_name']" position="after">
+
+            <td class="text-end">
+
+                <t t-set="lot_values" t-value="o._get_invoiced_lot_values()"/>
+
+                <t t-foreach="lot_values" t-as="lot">
+
+                    <t t-if="lot['product_id'] == line.product_id.id">
+
+                        <span t-esc="lot['lot_name']"/>
+                        <br/>
+
+                    </t>
+
+                </t>
+
+            </td>
+
+        </xpath>
+    </template>
+
 </odoo>
