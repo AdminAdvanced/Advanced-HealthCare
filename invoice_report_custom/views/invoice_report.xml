@@ -52,4 +52,106 @@
 
     </template>
 
+
+    <!--   توسيط البيانات و تعديل مكان title en  -->
+    <template id="invoice_information_custom"
+              inherit_id="l10n_gcc_invoice.arabic_english_invoice"
+              priority="99">
+
+        <xpath expr="//div[@id='informations']" position="replace">
+
+            <div id="informations"
+                 class="pb-3"
+                 t-if="o.invoice_date or (o.invoice_date_due and o.move_type == 'out_invoice' and o.state == 'posted') or o.delivery_date or o.invoice_origin or o.ref">
+
+                <!-- Invoice Date -->
+                <div class="row mb-1" t-if="o.invoice_date">
+                    <div class="col-4 text-start">
+                        <strong>Invoice Date:</strong>
+                    </div>
+                    <div class="col-4 text-center">
+                        <span t-field="o.invoice_date"/>
+                    </div>
+                    <div class="col-4 text-end">
+                        <strong>: تاريخ الفاتورة</strong>
+                    </div>
+                </div>
+
+                <!-- Due Date -->
+                <div class="row mb-1"
+                     t-if="o.invoice_date_due and o.move_type == 'out_invoice' and o.state == 'posted'">
+                    <div class="col-4 text-start">
+                        <strong>Due Date:</strong>
+                    </div>
+                    <div class="col-4 text-center">
+                        <span t-field="o.invoice_date_due"/>
+                    </div>
+                    <div class="col-4 text-end">
+                        <strong>: تاريخ الاستحقاق</strong>
+                    </div>
+                </div>
+
+                <!-- Supply Date -->
+                <div class="row mb-1" t-if="o.delivery_date">
+                    <div class="col-4 text-start">
+                        <strong>Supply Date:</strong>
+                    </div>
+                    <div class="col-4 text-center">
+                        <span t-out="o.delivery_date.strftime('%Y-%m-%d')"/>
+                    </div>
+                    <div class="col-4 text-end">
+                        <strong>: تاريخ التوريد</strong>
+                    </div>
+                </div>
+
+                <!-- Source -->
+                <div class="row mb-1" t-if="o.invoice_origin">
+                    <div class="col-4 text-start">
+                        <strong>Source:</strong>
+                    </div>
+                    <div class="col-4 text-center">
+                        <span t-field="o.invoice_origin"/>
+                    </div>
+                    <div class="col-4 text-end">
+                        <strong>: المصدر</strong>
+                    </div>
+                </div>
+
+                <!-- Reference -->
+                <div class="row mb-1" t-if="o.ref">
+                    <div class="col-4 text-start">
+                        <strong>Reference:</strong>
+                    </div>
+                    <div class="col-4 text-center">
+                        <span t-field="o.ref"/>
+                    </div>
+                    <div class="col-4 text-end">
+                        <strong>: رقم الإشارة</strong>
+                    </div>
+                </div>
+
+            </div>
+
+        </xpath>
+
+    </template>
+
+
+    <!--  اضافه الوحده بالعربي للجدول  -->
+    <template id="invoice_quantity_uom"
+              inherit_id="l10n_gcc_invoice.arabic_english_invoice"
+              priority="99">
+
+        <xpath expr="//td[hasclass('o_td_quantity')]" position="replace">
+            <td class="o_td_quantity text-end">
+                <span t-field="line.quantity"/>
+                <span t-field="line.product_uom_id"/>
+                /
+                <span t-field="line.product_uom_id.x_studio_unit_of_measure_ar"/>
+            </td>
+
+        </xpath>
+
+    </template>
+
 </odoo>
