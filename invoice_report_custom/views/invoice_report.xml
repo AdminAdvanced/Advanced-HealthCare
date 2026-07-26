@@ -194,38 +194,32 @@
         <!-- Add columns after Description -->
         <xpath expr="//td[@name='account_invoice_line_name']" position="after">
 
+            <td class="text-center">
 
-            <td class="text-end">
+                <t t-set="lots"
+                   t-value="o.get_invoice_line_lots(line)"/>
 
-                 <t t-set="lot_values"
-                    t-value="line.get_invoice_lots()"/>
+                <t t-foreach="lots" t-as="lot">
 
+                    <span t-esc="lot['lot_name']"/>
 
-                <t t-set="first_lot" t-value="True"/>
-
-                <t t-foreach="lot_values" t-as="lot">
-
-                    <div>
-                        <span t-esc="lot['lot_name']"/>
-                    </div>
+                    <br/>
 
                 </t>
 
             </td>
 
+            <td class="text-center">
 
+                <t t-set="lots"
+                   t-value="o.get_invoice_line_lots(line)"/>
 
-            <td class="text-end">
+                <t t-foreach="lots" t-as="lot">
 
-               <t t-set="lot_values"
-                    t-value="line.get_invoice_lots()"/>
+                    <span t-esc="lot['quantity']"/>
+                    <span t-esc="lot['uom_name']"/>
 
-
-                <t t-foreach="lot_values" t-as="lot">
-
-                    <div>
-                        <span t-esc="lot['quantity']"/>
-                    </div>
+                    <br/>
 
                 </t>
 
