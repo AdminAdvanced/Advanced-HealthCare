@@ -1,18 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
- <odoo>
+<odoo>
 
-    <!--  اضافه اسم العميل بالعربي  -->
     <template id="invoice_report_custom"
-              inherit_id="account.report_invoice_document">
+              inherit_id="account.report_invoice_document"
+              priority="99">
 
-        <xpath expr="//address[@t-field='o.partner_id']"
-               position="after">
+        <xpath expr="//div[@id='informations']" position="before">
 
-            <div t-if="o.partner_id.x_studio_name_ar"
-                 style="margin-top:2px;font-weight:bold;">
-
-                <span t-field="o.partner_id.x_studio_name_ar"/>
-
+            <div style="background:red;color:white;font-size:30px">
+                TEST
             </div>
 
         </xpath>
