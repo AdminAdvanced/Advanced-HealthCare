@@ -2,7 +2,7 @@
 <odoo>
 
     <template id="invoice_report_custom"
-              inherit_id="account.report_invoice_document">
+              inherit_id="account.report_invoice">
 
         <xpath expr="//div[hasclass('invoice_main')]" position="before">
 
