@@ -1,22 +1,29 @@
 from odoo import models
 
 
-class AccountMoveLine(models.Model):
-    _inherit = "account.move.line"
+class AccountMove(models.Model):
+    _inherit = "account.move"
 
-    def get_invoice_lots(self):
+    def get_invoice_line_lots(self, invoice_line):
+        """Return lots for a specific invoice line."""
+
         self.ensure_one()
 
-        lots = []
+        result = []
 
-        for sale_line in self.sale_line_ids:
-            for move in sale_line.move_ids:
-                for move_line in move.move_line_ids:
-                    if move_line.lot_id:
-                        lots.append({
-                            "lot_name": move_line.lot_id.name,
-                            "quantity": move_line.quantity,
-                            "uom": move_line.product_uom_id.name,
-                        })
+        lot_values = self._get_invoiced_lot_values()
 
-        return lots
+        if not invoice_line.product_id:
+            return result
+
+        product_name = invoice_line.product_id.display_name
+
+        for lot in lot_values:
+            if lot.get("product_name") == product_name:
+                result.append({
+                    "lot_name": lot.get("lot_name"),
+                    "quantity": lot.get("quantity"),
+                    "uom_name": lot.get("uom_name"),
+                })
+
+        return result
