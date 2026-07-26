@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-
+    <!-- اضافه اسم العميل بالعربي تحت اسمه بالانجليزي  -->
     <template id="invoice_report_custom"
               inherit_id="l10n_gcc_invoice.arabic_english_invoice"
               priority="99">
@@ -34,5 +34,22 @@
         </xpath>
 
     </template>
+
+
+    <!-- تصغير حجم QR Code  -->
+    <template id="invoice_qr_size_custom"
+              inherit_id="l10n_sa.arabic_english_invoice"
+              priority="99">
+
+        <xpath expr="//img[contains(@t-att-src, 'barcode_type=%s')]" position="attributes">
+
+            <attribute name="t-att-src">
+                "'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', quote_plus(o.l10n_sa_qr_code_str), 70, 70)"
+            </attribute>
+
+        </xpath>
+
+    </template>
+
 
 </odoo>
