@@ -2,10 +2,9 @@
 <odoo>
 
     <template id="invoice_report_custom"
-              inherit_id="account.report_invoice_document"
-              priority="99">
+              inherit_id="account.report_invoice_document">
 
-        <xpath expr="//div[@id='informations']" position="before">
+        <xpath expr="//div[hasclass('invoice_main')]" position="before">
 
             <div style="background:red;color:white;font-size:30px">
                 TEST
