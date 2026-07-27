@@ -1,19 +1,22 @@
-# -*- coding: utf-8 -*-
-
-# from odoo import models, fields, api
+from odoo import models
 
 
-# class invoice_report_custom(models.Model):
-#     _name = 'invoice_report_custom.invoice_report_custom'
-#     _description = 'invoice_report_custom.invoice_report_custom'
+class AccountMove(models.Model):
+    _inherit = "account.move"
 
-#     name = fields.Char()
-#     value = fields.Integer()
-#     value2 = fields.Float(compute="_value_pc", store=True)
-#     description = fields.Text()
-#
-#     @api.depends('value')
-#     def _value_pc(self):
-#         for record in self:
-#             record.value2 = float(record.value) / 100
+    def _get_invoiced_lot_values(self):
+        print("CUSTOM ACCOUNT MOVE LOADED")
+        res = super()._get_invoiced_lot_values()
 
+        for line in res:
+            lot = self.env["stock.lot"].browse(line.get("lot_id"))
+
+            if lot.exists():
+                product = lot.product_id
+
+                line.update({
+                    "product_name_ar": product.product_tmpl_id.x_studio_product_name_ar or "",
+                    "uom_name_ar": lot.product_uom_id.x_studio_unit_of_measure_ar or "",
+                })
+
+        return res
