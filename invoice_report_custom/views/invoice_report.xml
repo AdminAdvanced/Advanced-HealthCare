@@ -177,7 +177,7 @@
               inherit_id="l10n_gcc_invoice.arabic_english_invoice"
               priority="999">
 
-        <xpath expr="//div[@id='total']" position="after">
+        <xpath expr="//t[@t-if='lot_values']" position="replace">
 
             <t groups="stock_account.group_lot_on_invoice">
                 <t t-set="lot_values" t-value="o._get_invoiced_lot_values()"/>
@@ -202,9 +202,9 @@
                                 </th>
 
                                 <th class="text-end">
-                                    <span>SN/LN</span>
+                                    <span>SN/Lot</span>
                                     <br/>
-                                    <span>رقم مسلسل\لوط</span>
+                                    <span>رقم التسلسل\لوت</span>
                                 </th>
                             </tr>
                         </thead>
@@ -256,6 +256,17 @@
 
             </t>
 
+        </xpath>
+
+    </template>
+
+    <template id="hide_original_lot_table"
+              inherit_id="l10n_gcc_invoice_stock_account.arabic_english_invoice_with_snln"
+              priority="998">
+
+        <xpath expr="//table[@name='invoice_snln_table']"
+               position="attributes">
+            <attribute name="t-if">False</attribute>
         </xpath>
 
     </template>
