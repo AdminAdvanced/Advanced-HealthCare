@@ -209,7 +209,11 @@
 
                     <span t-esc="lot['lot_name']"/>
 
-                    <br/>
+                    <t t-if="not lot_last">
+                        <br/>
+                        <span>----------</span>
+                        <br/>
+                    </t>
 
                 </t>
 
@@ -222,12 +226,16 @@
                 <t t-set="lots"
                    t-value="o.get_invoice_line_lots(line) or []"/>
 
-                <t t-foreach="lots" t-as="lot">
+               <t t-foreach="lots" t-as="lot">
 
                     <span t-esc="lot['quantity']"/>
                     <span t-esc="lot['uom_name']"/>
 
-                    <br/>
+                    <t t-if="not lot_last">
+                        <br/>
+                        <span>----------</span>
+                        <br/>
+                    </t>
 
                 </t>
 
