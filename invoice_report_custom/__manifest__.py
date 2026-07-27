@@ -6,6 +6,7 @@
                 'l10n_gcc_invoice',
                 'l10n_sa',
                 'stock_account',
+                'sale_stock',
                 'l10n_gcc_invoice_stock_account',
                 ],
     'assets': {
