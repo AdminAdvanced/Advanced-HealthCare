@@ -217,7 +217,7 @@
 
                                     <td>
                                         <div>
-                                            <t t-esc="snln_line['product_name_en']"/>
+                                            <t t-esc="snln_line['product_name']"/>
                                         </div>
 
                                         <div>
@@ -232,7 +232,7 @@
 
                                         <br/>
 
-                                        <t t-esc="snln_line['uom_name_en']"/>
+                                        <t t-esc="snln_line['uom_name']"/>
 
                                         <br/>
 
