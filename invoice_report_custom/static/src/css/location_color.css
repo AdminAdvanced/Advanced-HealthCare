@@ -1,0 +1,7 @@
+/* هاد الملف ما اله علاقه بالريبورت او الفاتوره هاد فقط لتعديل لون نصSource Location الموجود داخل : Inv- operations - receipts, delv, internal */
+
+/* Color Source Location field in Stock Transfer */
+.o_form_view .o_field_widget[name="location_id"] .o_field_many2one_selection {
+    color: red !important;
+    font-weight: bold !important;
+}
