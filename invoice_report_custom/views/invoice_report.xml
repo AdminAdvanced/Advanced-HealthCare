@@ -177,62 +177,84 @@
               inherit_id="l10n_gcc_invoice.arabic_english_invoice"
               priority="999">
 
-        <xpath expr="//table[@name='invoice_snln_table']" position="replace">
+        <xpath expr="//div[@id='total']" position="after">
 
-            <table class="table table-sm" style="width: 50%;" name="invoice_snln_table">
+            <t groups="stock_account.group_lot_on_invoice">
+                <t t-set="lot_values" t-value="o._get_invoiced_lot_values()"/>
 
-                <thead>
-                    <tr>
-                        <th>
-                            <span>Product</span>
-                            <br/>
-                            <span>المنتج</span>
-                        </th>
+                <t t-if="lot_values">
+                    <br/>
 
-                        <th class="text-end">
-                            <span>Quantity</span>
-                            <br/>
-                            <span>الكمية</span>
-                        </th>
+                    <table class="table table-sm" style="width: 50%;" name="invoice_snln_table">
 
-                        <th class="text-end">
-                            <span>SN/LN</span>
-                            <br/>
-                            <span>رقم مسلسل\لوط</span>
-                        </th>
-                    </tr>
-                </thead>
+                        <thead>
+                            <tr>
+                                <th>
+                                    <span>Product</span>
+                                    <br/>
+                                    <span>المنتج</span>
+                                </th>
 
-                <tbody>
-                    <t t-foreach="lot_values" t-as="snln_line">
-                        <tr>
+                                <th class="text-end">
+                                    <span>Quantity</span>
+                                    <br/>
+                                    <span>الكمية</span>
+                                </th>
 
-                            <td>
-                                <div>
-                                    <t t-esc="snln_line['product_name_en']"/>
-                                </div>
-                                <div>
-                                    <t t-esc="snln_line['product_name_ar']"/>
-                                </div>
-                            </td>
+                                <th class="text-end">
+                                    <span>SN/LN</span>
+                                    <br/>
+                                    <span>رقم مسلسل\لوط</span>
+                                </th>
+                            </tr>
+                        </thead>
 
-                            <td class="text-end">
-                                <t t-esc="snln_line['quantity']"/>
-                                <br/>
-                                <t t-esc="snln_line['uom_name_en']"/>
-                                <br/>
-                                <t t-esc="snln_line['uom_name_ar']"/>
-                            </td>
 
-                            <td class="text-end">
-                                <t t-esc="snln_line['lot_name']"/>
-                            </td>
+                        <tbody>
+                            <t t-foreach="lot_values" t-as="snln_line">
 
-                        </tr>
-                    </t>
-                </tbody>
+                                <tr>
 
-            </table>
+                                    <td>
+                                        <div>
+                                            <t t-esc="snln_line['product_name_en']"/>
+                                        </div>
+
+                                        <div>
+                                            <t t-esc="snln_line['product_name_ar']"/>
+                                        </div>
+                                    </td>
+
+
+                                    <td class="text-end">
+
+                                        <t t-esc="snln_line['quantity']"/>
+
+                                        <br/>
+
+                                        <t t-esc="snln_line['uom_name_en']"/>
+
+                                        <br/>
+
+                                        <t t-esc="snln_line['uom_name_ar']"/>
+
+                                    </td>
+
+
+                                    <td class="text-end">
+                                        <t t-esc="snln_line['lot_name']"/>
+                                    </td>
+
+                                </tr>
+
+                            </t>
+                        </tbody>
+
+                    </table>
+
+                </t>
+
+            </t>
 
         </xpath>
 
