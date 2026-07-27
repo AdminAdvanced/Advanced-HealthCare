@@ -172,85 +172,63 @@
     </template>
 
 
-    <!--  add lot  -->
-    <template id="invoice_lot_column"
-              inherit_id="l10n_gcc_invoice.arabic_english_invoice"
-              priority="99">
-
-
-        <!-- Add Lot columns after Description header -->
-        <xpath expr="//th[@name='th_subtotal']" position="before">
-
-            <th name="th_lot" class="text-end fw-bold">
-                <span>SN/Lot</span>
-                <br/>
-                <span>رقم التسلسل/لوت</span>
-            </th>
-
-            <th name="th_lot_qty" class="text-end fw-bold">
-                <span>Lot Qty</span>
-                <br/>
-                <span>كمية اللوت</span>
-            </th>
-
-        </xpath>
-
-
-        <!-- Add Lot data after Description column -->
-        <xpath expr="//td[span[@t-field='line.price_subtotal']]" position="before">
-
-            <!-- Lot Number -->
-            <td class="text-center">
-
-                <t t-set="lots"
-                   t-value="o.get_invoice_line_lots(line) or []"/>
-
-                <t t-foreach="lots" t-as="lot">
-
-                    <span t-esc="lot['lot_name']"/>
-
-                     <t t-if="not lot_last">
-                        <hr style="margin:2px 0;border-top:1px solid #999;"/>
-                    </t>
-
-                </t>
-
-            </td>
-
-
-            <!-- Lot Quantity -->
-            <td class="text-center">
-
-                <t t-set="lots"
-                   t-value="o.get_invoice_line_lots(line) or []"/>
-
-               <t t-foreach="lots" t-as="lot">
-
-                    <span t-esc="lot['quantity']"/>
-                    <span t-esc="lot['uom_name']"/>
-
-                    <t t-if="not lot_last">
-                        <hr style="margin:2px 0;border-top:1px solid #999;"/>
-                    </t>
-
-                </t>
-
-            </td>
-
-
-        </xpath>
-
-
-    </template>
-
-    <!-- حذف تيبل اللوت  -->
-    <template id="remove_bottom_lot_table"
+    <!-- تعديل تيبل اللوت  -->
+   <template id="edit_lot_table"
               inherit_id="l10n_gcc_invoice_stock_account.arabic_english_invoice_with_snln"
               priority="999">
 
-        <xpath expr="//table[@name='invoice_snln_table']"
-               position="replace"/>
+        <xpath expr="//table[@name='invoice_snln_table']/tbody" position="replace">
+
+            <tbody>
+
+                <t t-foreach="lot_values" t-as="snln_line">
+
+                    <tr>
+
+                        <!-- Product -->
+                        <td>
+
+                            <div>
+                                <t t-esc="snln_line['product_name_en']"/>
+                            </div>
+
+                            <t t-if="snln_line['product_name_ar']">
+                                <div>
+                                    <t t-esc="snln_line['product_name_ar']"/>
+                                </div>
+                            </t>
+
+                        </td>
+
+                        <!-- Quantity -->
+                        <td class="text-center">
+
+                            <div>
+                                <t t-esc="snln_line['quantity']"/>
+                                <t t-esc="snln_line['uom_name_en']"/>
+                            </div>
+
+                            <t t-if="snln_line['uom_name_ar']">
+                                <div>
+                                    <t t-esc="snln_line['quantity']"/>
+                                    <t t-esc="snln_line['uom_name_ar']"/>
+                                </div>
+                            </t>
+
+                        </td>
+
+                        <!-- SN / LOT -->
+                        <td class="text-center">
+                            <t t-esc="snln_line['lot_name']"/>
+                        </td>
+
+                    </tr>
+
+                </t>
+
+            </tbody>
+
+        </xpath>
 
     </template>
-
 </odoo>
