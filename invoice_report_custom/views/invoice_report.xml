@@ -97,7 +97,7 @@
                         <strong>Supply Date:</strong>
                     </div>
                     <div class="col-4 text-center">
-                        <span t-out="o.delivery_date"/>
+                        <span t-out="o.delivery_date.strftime('%m/%d/%Y')"/>
                     </div>
                     <div class="col-4 text-end">
                         <strong>: تاريخ التوريد</strong>
