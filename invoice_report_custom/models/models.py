@@ -20,3 +20,4 @@ class AccountMove(models.Model):
                 })
 
         return res
+
