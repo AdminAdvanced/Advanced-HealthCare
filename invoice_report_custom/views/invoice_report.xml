@@ -97,7 +97,7 @@
                         <strong>Supply Date:</strong>
                     </div>
                     <div class="col-4 text-center">
-                        <span t-out="o.delivery_date.strftime('%Y-%m-%d')"/>
+                        <span t-out="o.delivery_date"/>
                     </div>
                     <div class="col-4 text-end">
                         <strong>: تاريخ التوريد</strong>
@@ -137,7 +137,7 @@
     </template>
 
 
-    <!--  اضافه الوحده بالعربي للجدول  -->
+    <!--  اضافه الوحده و الديسكربشن بالعربي للجدول  -->
     <template id="invoice_quantity_uom"
               inherit_id="l10n_gcc_invoice.arabic_english_invoice"
               priority="99">
@@ -159,16 +159,14 @@
             <td class="text-end" name="account_invoice_line_name">
 
                 <span t-field="line.product_id.name"/>
-
-                <t t-if="line.product_id.x_studio_product_name_ar">
-                    <br/>
-                    <span t-field="line.product_id.x_studio_product_name_ar"/>
-                </t>
-
+                <div style="direction: rtl; text-align: right;">
+                    <t t-if="line.product_id.x_studio_product_name_ar">
+                        <br/>
+                        <span t-field="line.product_id.x_studio_product_name_ar"/>
+                    </t>
+                </div>
             </td>
-
         </xpath>
-
     </template>
 
 
@@ -194,17 +192,15 @@
                                     <br/>
                                     <span>المنتج</span>
                                 </th>
-
-                                <th class="text-end">
-                                    <span>Quantity</span>
-                                    <br/>
-                                    <span>الكمية</span>
-                                </th>
-
                                 <th class="text-end">
                                     <span>SN/Lot</span>
                                     <br/>
                                     <span>رقم التسلسل\لوت</span>
+                                </th>
+                                <th class="text-end">
+                                    <span>Quantity</span>
+                                    <br/>
+                                    <span>الكمية</span>
                                 </th>
                             </tr>
                         </thead>
@@ -225,6 +221,9 @@
                                         </div>
                                     </td>
 
+                                    <td class="text-end">
+                                        <t t-esc="snln_line['lot_name']"/>
+                                    </td>
 
                                     <td class="text-end">
 
@@ -238,11 +237,6 @@
 
                                         <t t-esc="snln_line['uom_name_ar']"/>
 
-                                    </td>
-
-
-                                    <td class="text-end">
-                                        <t t-esc="snln_line['lot_name']"/>
                                     </td>
 
                                 </tr>
@@ -268,6 +262,18 @@
         <xpath expr="//table[@name='invoice_snln_table']"
                position="attributes">
             <attribute name="t-if">False</attribute>
+        </xpath>
+
+    </template>
+
+    <!-- حذف التاريخ و الوقت للطباعه -->
+    <template id="remove_print_datetime"
+              inherit_id="l10n_sa.arabic_english_invoice"
+              priority="999">
+
+        <xpath expr="//t[@t-set='additional_footer_text']"
+               position="attributes">
+            <attribute name="t-value">''</attribute>
         </xpath>
 
     </template>
