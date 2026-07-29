@@ -46,20 +46,21 @@
                 h1, h2, h3,
                 .invoice-title,
                 .o_invoice_title {
-                    font-size:14pt !important;
+                    font-size:10pt !important;
                 }
 
 
                 /* بيانات الشركة والعميل */
                 .company_address,
                 address {
-                    font-size:12pt;
+                    font-size:10pt;
                 }
 
 
                 /* عناوين الجدول */
                 table thead th {
-                    font-size:10pt !important;
+                    font-size: 10pt !important;
+                    font-weight: normal !important;
                 }
 
 
@@ -284,53 +285,101 @@
         <xpath expr="//td[@name='account_invoice_line_name']" position="after">
 
             <!-- SN / LOT -->
-            <td class="text-center align-middle"
-                style="padding:0; vertical-align:top;">
+            <td class="text-center align-middle">
 
-                <t t-foreach="lots" t-as="lot">
+                <t t-set="lots"
+                   t-value="o.get_invoice_line_lots(line) or []"/>
+
+                <td class="text-center align-middle"
+                    style="padding:0; vertical-align:top;">
+
+                    <t t-foreach="lots" t-as="lot">
+
+                        <div t-att-style="
+                            'height:30px;
+                             line-height:30px;
+                             text-align:center;
+                             font-family:Arial, sans-serif;
+                             font-size:8pt;
+                             font-weight:normal;
+                             border-bottom:' +
+                             ('0px' if lot_last else '1px') +
+                             ' solid #999;'
+                        ">
+                            <span t-esc="lot['lot_name']"/>
+                        </div>
+
+                    </t>
+                </td>
+               <!--<t t-foreach="lots" t-as="lot">
 
                     <div t-att-style="
                         'height:30px;
                          line-height:30px;
+                         vertical-align:top;
                          text-align:center;
                          font-family:Arial, sans-serif;
                          font-size:8pt;
                          font-weight:normal;
-                         border-bottom:' +
-                         ('0px' if lot_last else '1px') +
-                         ' solid #999;'
+                         box-sizing:border-box;' +
+                         ('' if lot_last else 'border-bottom:1px solid #999;')
                     ">
                         <span t-esc="lot['lot_name']"/>
                     </div>
 
-                </t>
+                </t>-->
 
             </td>
 
-            <!-- LOT QTY -->
-            <td class="text-center align-middle"
-                style="padding:0; vertical-align:top;">
 
-                <t t-foreach="lots" t-as="lot">
+            <!-- LOT QTY -->
+            <td class="text-center align-middle">
+
+                <t t-set="lots"
+                   t-value="o.get_invoice_line_lots(line) or []"/>
+
+                <td class="text-center align-middle"
+                    style="padding:0; vertical-align:top;">
+
+                    <t t-foreach="lots" t-as="lot">
+
+                        <div t-att-style="
+                            'height:30px;
+                             line-height:30px;
+                             text-align:center;
+                             font-family:Arial, sans-serif;
+                             font-size:8pt;
+                             font-weight:normal;
+                             border-bottom:' +
+                             ('0px' if lot_last else '1px') +
+                             ' solid #999;'
+                        ">
+                            <span t-esc="lot['quantity']"/>
+                            <span t-esc="lot['uom_name']"/>
+                        </div>
+                    </t>
+                </td>
+
+               <!-- <t t-foreach="lots" t-as="lot">
 
                     <div t-att-style="
                         'height:30px;
                          line-height:30px;
+                         vertical-align:top;
                          text-align:center;
                          font-family:Arial, sans-serif;
                          font-size:8pt;
                          font-weight:normal;
-                         border-bottom:' +
-                         ('0px' if lot_last else '1px') +
-                         ' solid #999;'
+                         box-sizing:border-box;' +
+                         ('' if lot_last else 'border-bottom:1px solid #999;')
                     ">
                         <span t-esc="lot['quantity']"/>
                         <span t-esc="lot['uom_name']"/>
                     </div>
-
-                </t>
+                </t>-->
 
             </td>
+
         </xpath>
 
     </template>
