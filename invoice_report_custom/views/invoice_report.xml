@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-     <record id="paperformat_invoice_landscape" model="report.paperformat">
+    <record id="paperformat_invoice_landscape" model="report.paperformat">
         <field name="name">Invoice Landscape</field>
 
         <field name="default" eval="False"/>
