@@ -186,7 +186,7 @@
 
     </template>
 
-د
+
     <!-- اضافه اسم العميل بالعربي تحت اسمه بالانجليزي  -->
     <template id="invoice_report_custom"
               inherit_id="l10n_gcc_invoice.arabic_english_invoice"
