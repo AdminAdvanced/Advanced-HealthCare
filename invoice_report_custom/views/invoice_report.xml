@@ -612,7 +612,7 @@
 
     </template>-->
 
-    <!-- اخفاء تيبل اللوت الاصلي  -->
+    <!-- اخفاء تيبل اللوت الاصلي
     <template id="hide_original_lot_table"
               inherit_id="l10n_gcc_invoice_stock_account.arabic_english_invoice_with_snln"
               priority="998">
@@ -622,7 +622,7 @@
             <attribute name="t-if">False</attribute>
         </xpath>
 
-    </template>
+    </template>-->
 
 
     <!-- حذف التاريخ و الوقت للطباعه -->
