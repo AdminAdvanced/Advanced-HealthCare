@@ -1,12 +1,8 @@
-.qr_small {
-    width: 180px !important;
-    height: 180px !important;
-}
 @font-face {
     font-family: 'NotoNaskhArabic';
     src: url('/invoice_report_custom/static/src/fonts/NotoNaskhArabic-Regular.ttf') format('truetype');
 }
 
 .ar-font{
-    font-family: 'NotoNaskhArabic', sans-serif !important;
+    font-family:'NotoNaskhArabic' !important;
 }

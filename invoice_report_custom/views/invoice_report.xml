@@ -1,9 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
+
+     <record id="paperformat_invoice_landscape" model="report.paperformat">
+        <field name="name">Invoice Landscape</field>
+
+        <field name="default" eval="False"/>
+
+        <field name="format">A4</field>
+
+        <field name="orientation">Landscape</field>
+
+        <field name="margin_top">10</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">8</field>
+        <field name="margin_right">8</field>
+
+        <field name="header_spacing">5</field>
+
+        <field name="dpi">90</field>
+
+    </record>
+    <!-- Attach it only to Customer Invoice report -->
+    <record id="account.account_invoices" model="ir.actions.report">
+        <field name="paperformat_id" ref="invoice_report_custom.paperformat_invoice_landscape"/>
+    </record>
+
     <!-- اضافه اسم العميل بالعربي تحت اسمه بالانجليزي  -->
     <template id="invoice_report_custom"
               inherit_id="l10n_gcc_invoice.arabic_english_invoice"
               priority="99">
+        <!-- تغير نوع الخط الفاتوره -->
+            <xpath expr="//div[hasclass('page')]" position="attributes">
+                    <attribute name="class" add=" ar-font" separator=" "/>
+            </xpath>
 
         <xpath expr="//t[@t-set='address']/address" position="replace">
 
@@ -170,7 +199,76 @@
     </template>
 
 
-    <!-- تعديل تيبل اللوت  -->
+    <template id="invoice_lot_column"
+              inherit_id="l10n_gcc_invoice.arabic_english_invoice"
+              priority="99">
+
+        <!-- Lot Headers -->
+        <xpath expr="//th[@name='th_description']" position="after">
+
+            <th name="th_lot" class="text-center fw-bold">
+                <span>SN/Lot</span>
+                <br/>
+                <span>رقم التسلسل/لوت</span>
+            </th>
+
+            <th name="th_lot_qty" class="text-center fw-bold">
+                <span>Lot Qty</span>
+                <br/>
+                <span>كمية اللوت</span>
+            </th>
+
+        </xpath>
+
+
+        <!-- Lot Columns -->
+        <xpath expr="//td[@name='account_invoice_line_name']" position="after">
+
+            <!-- SN / LOT -->
+            <td class="text-center align-middle">
+
+                <t t-set="lots"
+                   t-value="o.get_invoice_line_lots(line) or []"/>
+
+               <t t-foreach="lots" t-as="lot">
+
+                    <div t-att-style="
+                        'height:24px; line-height:24px; box-sizing:border-box;' +
+                        ('' if lot_last else 'border-bottom:1px solid #999;')
+                    ">
+                        <span t-esc="lot['lot_name']"/>
+                    </div>
+
+                </t>
+
+            </td>
+
+
+            <!-- LOT QTY -->
+            <td class="text-center align-middle">
+
+                <t t-set="lots"
+                   t-value="o.get_invoice_line_lots(line) or []"/>
+
+                <t t-foreach="lots" t-as="lot">
+
+                    <div t-att-style="
+                        'height:24px; line-height:24px; box-sizing:border-box;' +
+                        ('' if lot_last else 'border-bottom:1px solid #999;')
+                    ">
+                        <span t-esc="lot['quantity']"/>
+                        <span t-esc="lot['uom_name']"/>
+                    </div>
+
+                </t>
+
+            </td>
+
+        </xpath>
+
+    </template>
+
+    <!-- تعديل تيبل اللوت
     <template id="edit_lot_table"
               inherit_id="l10n_gcc_invoice.arabic_english_invoice"
               priority="999">
@@ -252,7 +350,7 @@
 
         </xpath>
 
-    </template>
+    </template>-->
 
     <!-- اخفاء تيبل اللوت الاصلي  -->
     <template id="hide_original_lot_table"
@@ -277,4 +375,5 @@
         </xpath>
 
     </template>
+
 </odoo>
