@@ -561,6 +561,7 @@
                     <div class="col-7 text-end">
                         <strong>
                             Total Taxable Amount (Excluding VAT) /
+                            <br/>
                              الاجمالي الخاضع للضريبة (غير شامل الضريبة)
                         </strong>
                     </div>
@@ -619,6 +620,7 @@
                     <div class="col-7 text-end">
 
                        Invoice Total (Including VAT) /
+                        <br/>
                         اجمالي الفاتورة شامل الضريبة
                     </div>
 
