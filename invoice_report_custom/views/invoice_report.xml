@@ -25,6 +25,68 @@
         <field name="paperformat_id" ref="invoice_report_custom.paperformat_invoice_landscape"/>
     </record>
 
+    <!-- تغيرات بتصميم الخط و حجمه -->
+    <template id="invoice_font_custom"
+              inherit_id="l10n_gcc_invoice.arabic_english_invoice"
+              priority="100">
+
+        <xpath expr="//div[hasclass('page')]" position="inside">
+
+            <style>
+
+                /* كامل الفاتورة */
+                .page {
+                    font-family: Arial, sans-serif !important;
+                    font-size: 8pt;
+                    font-weight: normal;
+                }
+
+
+                /* العناوين الرئيسية */
+                h1, h2, h3,
+                .invoice-title,
+                .o_invoice_title {
+                    font-size:14pt !important;
+                    font-weight:bold !important;
+                }
+
+
+                /* بيانات الشركة والعميل */
+                .company_address,
+                address {
+                    font-size:12pt;
+                    font-weight:bold;
+                }
+
+
+                /* عناوين الجدول */
+                table thead th {
+                    font-size:10pt !important;
+                    font-weight:bold !important;
+                }
+
+
+                /* أسطر المنتجات */
+                table tbody td {
+                    font-size:8pt !important;
+                    font-weight:normal !important;
+                }
+
+
+                /* منع أي Bold غير مطلوب */
+                span,
+                div,
+                td {
+                    font-family:Arial, sans-serif;
+                }
+
+            </style>
+
+        </xpath>
+
+    </template>
+
+
     <!-- اضافه اسم العميل بالعربي تحت اسمه بالانجليزي  -->
     <template id="invoice_report_custom"
               inherit_id="l10n_gcc_invoice.arabic_english_invoice"
@@ -204,7 +266,7 @@
               priority="99">
 
         <!-- Lot Headers -->
-        <xpath expr="//th[@name='th_description']" position="after">
+        <xpath expr="//th[@name='th_description']" position="before">
 
             <th name="th_lot" class="text-center fw-bold">
                 <span>SN/Lot</span>
@@ -233,8 +295,15 @@
                <t t-foreach="lots" t-as="lot">
 
                     <div t-att-style="
-                        'height:24px; line-height:24px; box-sizing:border-box;' +
-                        ('' if lot_last else 'border-bottom:1px solid #999;')
+                        'height:30px;
+                         line-height:30px;
+                         vertical-align:top;
+                         text-align:center;
+                         font-family:Arial, sans-serif;
+                         font-size:8pt;
+                         font-weight:normal;
+                         box-sizing:border-box;' +
+                         ('' if lot_last else 'border-bottom:1px solid #999;')
                     ">
                         <span t-esc="lot['lot_name']"/>
                     </div>
@@ -253,13 +322,19 @@
                 <t t-foreach="lots" t-as="lot">
 
                     <div t-att-style="
-                        'height:24px; line-height:24px; box-sizing:border-box;' +
-                        ('' if lot_last else 'border-bottom:1px solid #999;')
+                        'height:30px;
+                         line-height:30px;
+                         vertical-align:top;
+                         text-align:center;
+                         font-family:Arial, sans-serif;
+                         font-size:8pt;
+                         font-weight:normal;
+                         box-sizing:border-box;' +
+                         ('' if lot_last else 'border-bottom:1px solid #999;')
                     ">
                         <span t-esc="lot['quantity']"/>
                         <span t-esc="lot['uom_name']"/>
                     </div>
-
                 </t>
 
             </td>

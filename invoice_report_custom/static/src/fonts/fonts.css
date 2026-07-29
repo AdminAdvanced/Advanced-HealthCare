@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'NotoNaskhArabic';
-    src: url('/invoice_report_custom/static/src/fonts/NotoNaskhArabic-Regular.ttf') format('truetype');
+    src: url('/invoice_report_custom/static/src/fonts/NotoNaskhArabic-VariableFont_wght.ttf') format('truetype');
 }
 
 .ar-font{
