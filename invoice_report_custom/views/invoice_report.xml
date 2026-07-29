@@ -538,7 +538,10 @@
 
         <xpath expr="//table[hasclass('o_total_table')]" position="replace">
 
-            <div class="o_total_table">
+            <div class="o_total_table" style="
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+             ">
 
                 <div class="row border-bottom py-1">
 
