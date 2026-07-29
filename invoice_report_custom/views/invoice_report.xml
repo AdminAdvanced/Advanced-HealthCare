@@ -285,7 +285,7 @@
 
             <!-- SN / LOT -->
             <td class="text-center align-middle"
-                style="padding:0;">
+                style="padding:0; vertical-align:top;">
 
                 <t t-foreach="lots" t-as="lot">
 
@@ -309,7 +309,7 @@
 
             <!-- LOT QTY -->
             <td class="text-center align-middle"
-                style="padding:0;">
+                style="padding:0; vertical-align:top;">
 
                 <t t-foreach="lots" t-as="lot">
 
