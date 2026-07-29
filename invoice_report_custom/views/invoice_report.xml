@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-    <record id="paperformat_invoice_landscape" model="report.paperformat">
+    <!--<record id="paperformat_invoice_landscape" model="report.paperformat">
         <field name="name">Invoice Landscape</field>
 
         <field name="default" eval="False"/>
@@ -20,10 +20,10 @@
         <field name="dpi">90</field>
 
     </record>
-    <!-- Attach it only to Customer Invoice report -->
+     Attach it only to Customer Invoice report
     <record id="account.account_invoices" model="ir.actions.report">
         <field name="paperformat_id" ref="invoice_report_custom.paperformat_invoice_landscape"/>
-    </record>
+    </record>-->
 
     <!-- تغيرات بتصميم الخط و حجمه -->
     <template id="invoice_font_custom"
@@ -47,7 +47,6 @@
                 .invoice-title,
                 .o_invoice_title {
                     font-size:14pt !important;
-                    font-weight:bold !important;
                 }
 
 
@@ -55,14 +54,12 @@
                 .company_address,
                 address {
                     font-size:12pt;
-                    font-weight:bold;
                 }
 
 
                 /* عناوين الجدول */
                 table thead th {
                     font-size:10pt !important;
-                    font-weight:bold !important;
                 }
 
 
@@ -287,23 +284,21 @@
         <xpath expr="//td[@name='account_invoice_line_name']" position="after">
 
             <!-- SN / LOT -->
-            <td class="text-center align-middle">
+            <td class="text-center align-middle"
+                style="padding:0; vertical-align:top;">
 
-                <t t-set="lots"
-                   t-value="o.get_invoice_line_lots(line) or []"/>
-
-               <t t-foreach="lots" t-as="lot">
+                <t t-foreach="lots" t-as="lot">
 
                     <div t-att-style="
                         'height:30px;
                          line-height:30px;
-                         vertical-align:top;
                          text-align:center;
                          font-family:Arial, sans-serif;
                          font-size:8pt;
                          font-weight:normal;
-                         box-sizing:border-box;' +
-                         ('' if lot_last else 'border-bottom:1px solid #999;')
+                         border-bottom:' +
+                         ('0px' if lot_last else '1px') +
+                         ' solid #999;'
                     ">
                         <span t-esc="lot['lot_name']"/>
                     </div>
@@ -312,33 +307,30 @@
 
             </td>
 
-
             <!-- LOT QTY -->
-            <td class="text-center align-middle">
-
-                <t t-set="lots"
-                   t-value="o.get_invoice_line_lots(line) or []"/>
+            <td class="text-center align-middle"
+                style="padding:0; vertical-align:top;">
 
                 <t t-foreach="lots" t-as="lot">
 
                     <div t-att-style="
                         'height:30px;
                          line-height:30px;
-                         vertical-align:top;
                          text-align:center;
                          font-family:Arial, sans-serif;
                          font-size:8pt;
                          font-weight:normal;
-                         box-sizing:border-box;' +
-                         ('' if lot_last else 'border-bottom:1px solid #999;')
+                         border-bottom:' +
+                         ('0px' if lot_last else '1px') +
+                         ' solid #999;'
                     ">
                         <span t-esc="lot['quantity']"/>
                         <span t-esc="lot['uom_name']"/>
                     </div>
+
                 </t>
 
             </td>
-
         </xpath>
 
     </template>
