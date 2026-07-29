@@ -642,8 +642,7 @@
     <template id="custom_invoice_bottom_layout"
               inherit_id="l10n_gcc_invoice.arabic_english_invoice">
 
-        <xpath expr="//div[@id='total']/ancestor::div[1]" position="replace">
-
+        <xpath expr="//div[@id='total']" position="replace">
             <div class="row mt-n3">
 
                 <!-- LEFT SIDE -->
