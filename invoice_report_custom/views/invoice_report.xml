@@ -532,7 +532,7 @@
     </template>
 
 
-
+    <!-- تعديلات ع الجدول المجموعات النهائيه -->
     <template id="custom_invoice_totals"
               inherit_id="l10n_gcc_invoice.arabic_english_invoice">
 
@@ -623,21 +623,7 @@
 
     </template>
 
-    <template id="invoice_total_table_fix"
-              inherit_id="l10n_gcc_invoice.arabic_english_invoice">
 
-        <xpath expr="//table[hasclass('o_total_table')]"
-               position="attributes">
-
-            <attribute name="style">
-                page-break-inside: avoid;
-                width:100%;
-                margin-bottom:0;
-            </attribute>
-
-        </xpath>
-
-    </template>
     <template id="custom_invoice_bottom_layout"
               inherit_id="l10n_gcc_invoice.arabic_english_invoice">
 
