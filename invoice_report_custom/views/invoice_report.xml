@@ -34,96 +34,159 @@
 
             <style>
 
-                /* العناوين الرئيسية */
-                h1, h2, h3,
-                .invoice-title,
-                .o_invoice_title {
-                    font-size:10pt !important;
+                /* ==========================================================
+                   GENERAL FONT
+                   ========================================================== */
+
+                .page{
                     font-family: Arial, sans-serif !important;
+                    font-size:8pt;
                 }
 
+                /* ==========================================================
+                   MAIN PRODUCT TABLE ONLY
+                   ========================================================== */
 
-                /* بيانات الشركة والعميل */
-                .company_address,
-                address {
-                    font-size:10pt;
-                    font-family: Arial, sans-serif !important;
+                table[name="invoice_line_table"]{
+                    width:100% !important;
+                    table-layout:fixed;
                 }
 
+                /* Header */
 
-                /* عناوين الجدول */
-                table[name="invoice_line_table"] thead th,
-                table[name="invoice_line_table"] thead th strong,
-                table[name="invoice_line_table"] thead th b,
-                table[name="invoice_line_table"] thead th span {
+                table[name="invoice_line_table"] thead th{
                     font-size:10pt !important;
                     font-weight:normal !important;
-                    font-family: Arial, sans-serif !important;
+                    font-family:Arial,sans-serif !important;
+
+                    padding-top:3px !important;
+                    padding-bottom:3px !important;
+
+                    vertical-align:middle;
                 }
 
+                /* Body */
 
-                /* أسطر المنتجات */
-                table tbody td {
+                table[name="invoice_line_table"] tbody td{
+
                     font-size:8pt !important;
                     font-weight:normal !important;
-                    font-family: Arial, sans-serif !important;
+                    font-family:Arial,sans-serif !important;
+
+                    padding-top:2px !important;
+                    padding-bottom:2px !important;
+
+                    vertical-align:top !important;
                 }
 
+                /* ==========================================================
+                   COLUMN WIDTHS
+                   ========================================================== */
 
-                 /* Description column */
-                table[name="invoice_line_table"] th[name="th_description"],
-                table[name="invoice_line_table"] td[name="account_invoice_line_name"]{
-                    width: 45% !important;
+                /* Description */
+
+                table[name="invoice_line_table"] th[name="th_description"]{
+                    width:28% !important;
                 }
 
+                /* Quantity */
 
-                /* Quantity column */
-                table[name="invoice_line_table"] th[name="th_quantity"],
-                table[name="invoice_line_table"] td[name="account_invoice_line_quantity"] {
-                    width: 8% !important;
+                table[name="invoice_line_table"] th[name="th_quantity"]{
+                    width:7% !important;
                 }
-
 
                 /* Unit Price */
-                table[name="invoice_line_table"] th[name="th_priceunit"],
-                table[name="invoice_line_table"] td[name="account_invoice_line_price_unit"] {
-                    width: 10% !important;
+
+                table[name="invoice_line_table"] th[name="th_priceunit"]{
+                    width:9% !important;
                 }
 
+                /* Discount */
+
+                table[name="invoice_line_table"] th[name="th_price_unit"]{
+                    width:6% !important;
+                }
 
                 /* Taxes */
-                table[name="invoice_line_table"] th[name="th_taxes"],
-                table[name="invoice_line_table"] td[name="account_invoice_line_taxes"] {
-                    width: 8% !important;
+
+                table[name="invoice_line_table"] th[name="th_taxes"]{
+                    width:8% !important;
                 }
 
+                /* Amount */
 
-                /* Subtotal columns */
-                table[name="invoice_line_table"] th[name="th_subtotal"],
-                table[name="invoice_line_table"] td[name="account_invoice_line_subtotal"] {
-                    width: 12% !important;
+                table[name="invoice_line_table"] th[name="th_subtotal"]{
+                    width:10% !important;
                 }
 
+                /* VAT Amount */
 
-                table[name="invoice_line_table"] th[name="th_subtotal_incl"],
-                table[name="invoice_line_table"] td[name="account_invoice_line_subtotal_incl"] {
-                    width: 12% !important;
+                table[name="invoice_line_table"] th[name="th_tax_amount"]{
+                    width:10% !important;
                 }
 
+                /* Total */
 
-                .table-sm th,
-                .table-sm td {
-                    padding-top: 2px !important;
-                    padding-bottom: 2px !important;
+                table[name="invoice_line_table"] th[name="th_total"]{
+                    width:10% !important;
                 }
 
+                /* ==========================================================
+                   YOUR CUSTOM COLUMNS
+                   ========================================================== */
+
+                table[name="invoice_line_table"] th[name="th_lot"]{
+                    width:12% !important;
+                }
+
+                table[name="invoice_line_table"] th[name="th_lot_qty"]{
+                    width:10% !important;
+                }
+
+                /* ==========================================================
+                   PRODUCT TABLE ROW HEIGHT
+                   ========================================================== */
+
+                table[name="invoice_line_table"] td{
+
+                    line-height:16px !important;
+
+                }
+
+                /* ==========================================================
+                   KEEP NUMBERS ON ONE LINE
+                   ========================================================== */
+
+                .text-nowrap{
+                    white-space:nowrap !important;
+                }
+
+                /* ==========================================================
+                   TOTAL TABLE
+                   DON'T TOUCH ITS LAYOUT
+                   ========================================================== */
+
+                #total table{
+
+                    table-layout:auto !important;
+                    width:auto !important;
+
+                }
+
+                #total td,
+                #total th{
+
+                    font-size:8pt !important;
+                    font-family:Arial,sans-serif !important;
+
+                }
             </style>
 
         </xpath>
 
     </template>
 
-
+د
     <!-- اضافه اسم العميل بالعربي تحت اسمه بالانجليزي  -->
     <template id="invoice_report_custom"
               inherit_id="l10n_gcc_invoice.arabic_english_invoice"
@@ -383,6 +446,75 @@
 
     </template>
 
+
+    <template id="invoice_headers_custom"
+              inherit_id="l10n_gcc_invoice.arabic_english_invoice"
+              priority="101">
+
+        <!-- Description -->
+        <xpath expr="//th[@name='th_description']" position="replace">
+            <th name="th_description" class="text-center">
+                <span>Product Description</span>
+                <br/>
+                <span>وصف المنتج</span>
+            </th>
+        </xpath>
+
+        <!-- Quantity -->
+        <xpath expr="//th[@name='th_quantity']" position="replace">
+            <th name="th_quantity" class="text-center">
+                <span>Qty</span>
+                <br/>
+                <span>الكمية</span>
+            </th>
+        </xpath>
+
+        <!-- Unit Price -->
+        <xpath expr="//th[@name='th_priceunit']" position="replace">
+            <th name="th_priceunit" class="text-center">
+                <span>Unit Price</span>
+                <br/>
+                <span>سعر الوحدة</span>
+            </th>
+        </xpath>
+
+        <!-- Taxes -->
+        <xpath expr="//th[@name='th_taxes']" position="replace">
+            <th name="th_taxes" class="text-center">
+                <span>VAT</span>
+                <br/>
+                <span>ضريبة القيمة المضافة</span>
+            </th>
+        </xpath>
+
+        <!-- Amount -->
+        <xpath expr="//th[@name='th_subtotal']" position="replace">
+            <th name="th_subtotal" class="text-center">
+                <span>Amount</span>
+                <br/>
+                <span>المبلغ</span>
+            </th>
+        </xpath>
+
+        <!-- VAT Amount -->
+        <xpath expr="//th[@name='th_tax_amount']" position="replace">
+            <th name="th_tax_amount" class="text-center">
+                <span>VAT Amount</span>
+                <br/>
+                <span>قيمة الضريبة</span>
+            </th>
+        </xpath>
+
+        <!-- Total -->
+        <xpath expr="//th[@name='th_total']" position="replace">
+            <th name="th_total" class="text-center">
+                <span>Total</span>
+                <br/>
+                <span>الإجمالي</span>
+            </th>
+        </xpath>
+
+    </template>
     <!-- تعديل تيبل اللوت
     <template id="edit_lot_table"
               inherit_id="l10n_gcc_invoice.arabic_english_invoice"
