@@ -47,6 +47,7 @@
                 .invoice-title,
                 .o_invoice_title {
                     font-size:10pt !important;
+                    font-family: Arial, sans-serif !important;
                 }
 
 
@@ -54,6 +55,7 @@
                 .company_address,
                 address {
                     font-size:10pt;
+                    font-family: Arial, sans-serif !important;
                 }
 
 
@@ -64,6 +66,7 @@
                 table thead th span {
                     font-size:10pt !important;
                     font-weight:normal !important;
+                    font-family: Arial, sans-serif !important;
                 }
 
 
@@ -71,6 +74,7 @@
                 table tbody td {
                     font-size:8pt !important;
                     font-weight:normal !important;
+                    font-family: Arial, sans-serif !important;
                 }
 
 
@@ -78,7 +82,7 @@
                 span,
                 div,
                 td {
-                    font-family:Arial, sans-serif;
+                    font-family: Arial, sans-serif !important;
                 }
 
             </style>
