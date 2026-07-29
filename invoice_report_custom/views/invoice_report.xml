@@ -638,18 +638,33 @@
     </template>
 
 
-    <template id="custom_invoice_bottom_layout"
+    <template id="invoice_footer_wrapper"
               inherit_id="l10n_gcc_invoice.arabic_english_invoice">
 
-        <xpath expr="//div[hasclass('mb-2')][p[@t-if='o.company_id.display_invoice_amount_total_words']]"
+        <xpath expr="//table[hasclass('o_total_table')]/ancestor::div[hasclass('clearfix')]"
+               position="attributes">
+            <attribute name="style">
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            </attribute>
+        </xpath>
+
+    </template>
+    <template id="invoice_total_table_fix"
+              inherit_id="l10n_gcc_invoice.arabic_english_invoice">
+
+        <xpath expr="//table[hasclass('o_total_table')]"
                position="attributes">
 
-            <attribute name="class">
-                mb-2 col-6
+            <attribute name="style">
+                page-break-inside: avoid;
+                width:100%;
+                margin-bottom:0;
             </attribute>
 
         </xpath>
 
     </template>
+
 
 </odoo>
