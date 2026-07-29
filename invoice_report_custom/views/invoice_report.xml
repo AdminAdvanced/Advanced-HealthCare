@@ -476,7 +476,7 @@
         <!-- Quantity -->
         <xpath expr="//th[@name='th_quantity']" position="replace">
             <th name="th_quantity" class="text-center">
-                <span>Quantity</span>
+                <span>Qty</span>
                 <br/>
                 <span>الكمية</span>
             </th>
