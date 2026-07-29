@@ -5,11 +5,7 @@ class AccountMove(models.Model):
     _inherit = "account.move"
 
     def _get_invoiced_lot_values(self):
-        """
-        Extend standard Odoo lot values
-        Add Arabic fields.
-        """
-
+        """Add Arabic fields to Odoo lot values."""
         res = super()._get_invoiced_lot_values()
 
         for line in res:
@@ -25,93 +21,51 @@ class AccountMove(models.Model):
 
         return res
 
-
     def get_invoice_line_lots(self, invoice_line):
         """
-        Return lots related to the exact invoice line.
-
-        Works with:
-        - Invoice created from Sales Order
-        - Invoice created manually
-        - Same product repeated on multiple lines
+        Return only the lots that belong to THIS invoice line.
+        Works for:
+        - Sales Orders
+        - Deliveries
+        - Partial Deliveries
+        - Multiple Lots
+        - Same product repeated several times
         """
 
         self.ensure_one()
 
         result = []
 
-        # ---------------------------------
-        # Case 1:
-        # Invoice generated from Sales Order
-        # ---------------------------------
+        # Get stock moves linked to this invoice line only
+        stock_moves = invoice_line.sale_line_ids.mapped("move_ids").filtered(
+            lambda m: m.state == "done"
+        )
 
-        for sale_line in invoice_line.sale_line_ids:
+        for move in stock_moves:
 
-            for move in sale_line.move_ids.filtered(
-                lambda m: m.state == "done"
-            ):
+            move_lines = move.move_line_ids.filtered(lambda ml: ml.lot_id)
 
-                for move_line in move.move_line_ids.filtered(
-                    lambda ml: ml.lot_id
-                ):
+            for ml in move_lines:
 
-                    result.append({
-                        "lot_name": move_line.lot_id.name,
-                        "quantity": move_line.quantity,
-                        "uom_name": move_line.product_uom_id.name,
-                        "uom_name_ar": (
-                            move_line.product_uom_id.x_studio_unit_of_measure_ar
-                            or ""
-                        ),
-                        "product_name_ar": (
-                            move_line.product_id
-                            .product_tmpl_id
-                            .x_studio_product_name_ar
-                            or ""
-                        ),
-                    })
+                result.append({
+                    "lot_name": ml.lot_id.name,
+                    "quantity": ml.quantity,
+                    "uom_name": ml.product_uom_id.name,
+                })
 
-        if result:
-            return result
+        # Remove duplicates if any
+        unique = []
+        seen = set()
 
+        for item in result:
+            key = (
+                item["lot_name"],
+                item["quantity"],
+                item["uom_name"],
+            )
 
-        # ---------------------------------
-        # Case 2:
-        # Direct invoice without Sales Order
-        # ---------------------------------
+            if key not in seen:
+                seen.add(key)
+                unique.append(item)
 
-        if invoice_line.product_id:
-
-            # Search stock moves linked to this invoice line
-            moves = self.env["stock.move"].search([
-                ("product_id", "=", invoice_line.product_id.id),
-                ("state", "=", "done"),
-                ("move_line_ids.lot_id", "!=", False),
-                "|",
-                ("origin", "=", self.invoice_origin),
-                ("picking_id", "in", self.picking_ids.ids),
-            ])
-
-            for move in moves:
-
-                for move_line in move.move_line_ids.filtered(
-                    lambda ml: ml.lot_id
-                ):
-
-                    result.append({
-                        "lot_name": move_line.lot_id.name,
-                        "quantity": move_line.quantity,
-                        "uom_name": move_line.product_uom_id.name,
-                        "uom_name_ar": (
-                            move_line.product_uom_id.x_studio_unit_of_measure_ar
-                            or ""
-                        ),
-                        "product_name_ar": (
-                            move_line.product_id
-                            .product_tmpl_id
-                            .x_studio_product_name_ar
-                            or ""
-                        ),
-                    })
-
-        return result
+        return unique
