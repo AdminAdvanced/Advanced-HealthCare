@@ -284,23 +284,21 @@
         <xpath expr="//td[@name='account_invoice_line_name']" position="after">
 
             <!-- SN / LOT -->
-            <td class="text-center align-middle">
+            <td class="text-center align-middle"
+                style="padding:0;">
 
-                <t t-set="lots"
-                   t-value="o.get_invoice_line_lots(line) or []"/>
-
-               <t t-foreach="lots" t-as="lot">
+                <t t-foreach="lots" t-as="lot">
 
                     <div t-att-style="
                         'height:30px;
                          line-height:30px;
-                         vertical-align:top;
                          text-align:center;
                          font-family:Arial, sans-serif;
                          font-size:8pt;
                          font-weight:normal;
-                         box-sizing:border-box;' +
-                         ('' if lot_last else 'border-bottom:1px solid #999;')
+                         border-bottom:' +
+                         ('0px' if lot_last else '1px') +
+                         ' solid #999;'
                     ">
                         <span t-esc="lot['lot_name']"/>
                     </div>
@@ -309,33 +307,30 @@
 
             </td>
 
-
             <!-- LOT QTY -->
-            <td class="text-center align-middle">
-
-                <t t-set="lots"
-                   t-value="o.get_invoice_line_lots(line) or []"/>
+            <td class="text-center align-middle"
+                style="padding:0;">
 
                 <t t-foreach="lots" t-as="lot">
 
                     <div t-att-style="
                         'height:30px;
                          line-height:30px;
-                         vertical-align:top;
                          text-align:center;
                          font-family:Arial, sans-serif;
                          font-size:8pt;
                          font-weight:normal;
-                         box-sizing:border-box;' +
-                         ('' if lot_last else 'border-bottom:1px solid #999;')
+                         border-bottom:' +
+                         ('0px' if lot_last else '1px') +
+                         ' solid #999;'
                     ">
                         <span t-esc="lot['quantity']"/>
                         <span t-esc="lot['uom_name']"/>
                     </div>
+
                 </t>
 
             </td>
-
         </xpath>
 
     </template>
