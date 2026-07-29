@@ -623,18 +623,6 @@
 
     </template>
 
-    <template id="invoice_footer_wrapper"
-              inherit_id="l10n_gcc_invoice.arabic_english_invoice">
-
-        <xpath expr="//table[hasclass('o_total_table')]/ancestor::div[hasclass('clearfix')]"
-               position="attributes">
-            <attribute name="style">
-                page-break-inside: avoid !important;
-                break-inside: avoid !important;
-            </attribute>
-        </xpath>
-
-    </template>
     <template id="invoice_total_table_fix"
               inherit_id="l10n_gcc_invoice.arabic_english_invoice">
 
