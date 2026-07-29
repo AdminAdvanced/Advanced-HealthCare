@@ -64,7 +64,19 @@
 
                     vertical-align:middle;
                 }
-
+                table[name="invoice_line_table"] thead th,
+                table[name="invoice_line_table"] thead th span {
+                    text-transform: none !important;
+                }
+                table[name="invoice_line_table"] thead th,
+                table[name="invoice_line_table"] thead th *,
+                table[name="invoice_line_table"] thead th span,
+                table[name="invoice_line_table"] thead th strong{
+                    font-size:8pt !important;
+                    font-weight:normal !important;
+                    text-transform:none !important;
+                    font-family:Arial,sans-serif !important;
+                }
                 /* Body */
 
                 table[name="invoice_line_table"] tbody td{
@@ -446,7 +458,7 @@
 
     </template>
 
-
+    <!--  تعديل التايتل على للجدول الاساسي -->
     <template id="invoice_headers_custom"
               inherit_id="l10n_gcc_invoice.arabic_english_invoice"
               priority="101">
@@ -463,7 +475,7 @@
         <!-- Quantity -->
         <xpath expr="//th[@name='th_quantity']" position="replace">
             <th name="th_quantity" class="text-center">
-                <span>Qty</span>
+                <span>Quantity</span>
                 <br/>
                 <span>الكمية</span>
             </th>
