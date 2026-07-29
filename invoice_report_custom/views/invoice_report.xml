@@ -458,6 +458,7 @@
 
     </template>
 
+
     <!--  تعديل التايتل على للجدول الاساسي -->
     <template id="invoice_headers_custom"
               inherit_id="l10n_gcc_invoice.arabic_english_invoice"
@@ -475,7 +476,7 @@
         <!-- Quantity -->
         <xpath expr="//th[@name='th_quantity']" position="replace">
             <th name="th_quantity" class="text-center">
-                <span>Quantity</span>
+                <span>Qty</span>
                 <br/>
                 <span>الكمية</span>
             </th>
@@ -493,18 +494,18 @@
         <!-- Taxes -->
         <xpath expr="//th[@name='th_taxes']" position="replace">
             <th name="th_taxes" class="text-center">
-                <span>VAT</span>
+                <span>Taxes</span>
                 <br/>
-                <span>ضريبة القيمة المضافة</span>
+                <span>نسبة الضريبة</span>
             </th>
         </xpath>
 
         <!-- Amount -->
         <xpath expr="//th[@name='th_subtotal']" position="replace">
             <th name="th_subtotal" class="text-center">
-                <span>Amount</span>
+                <span>Total Exclusive Of Vat</span>
                 <br/>
-                <span>المبلغ</span>
+                <span>المجموع بدون الضريبة</span>
             </th>
         </xpath>
 
@@ -520,9 +521,9 @@
         <!-- Total -->
         <xpath expr="//th[@name='th_total']" position="replace">
             <th name="th_total" class="text-center">
-                <span>Total</span>
+                <span>Total Inclusive Of Vat</span>
                 <br/>
-                <span>الإجمالي</span>
+                <span>المجموع شامل ضريبة القيمة المضافة</span>
             </th>
         </xpath>
 
