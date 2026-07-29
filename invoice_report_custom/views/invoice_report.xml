@@ -639,85 +639,130 @@
 
 
     <!-- تعديل الجزء الاخير من الفاتوره -->
-    <template id="invoice_footer_left_panel"
-              inherit_id="l10n_gcc_invoice.arabic_english_invoice"
-              priority="1000">
+    <template id="custom_invoice_bottom_layout"
+              inherit_id="l10n_gcc_invoice.arabic_english_invoice">
 
-        <xpath expr="//div[@id='total']" position="replace">
+        <xpath expr="//div[@id='total']/ancestor::div[1]" position="replace">
 
-            <div id="total" class="row mt-2">
+            <div class="row mt-n3">
 
                 <!-- LEFT SIDE -->
                 <div class="col-6">
 
-                    <t t-if="o.company_id.display_invoice_amount_total_words">
+                    <!-- Amount words -->
+                    <p class="lh-sm"
+                       t-if="o.company_id.display_invoice_amount_total_words">
+                        Total amount in words:
+                        <br/>
+                        <span class="text-muted"
+                              t-field="o.amount_total_words"/>
+                    </p>
 
-                        <div class="mb-3">
+                    <p class="lh-sm"
+                       t-if="o.company_id.display_invoice_amount_total_words">
+                        المبلغ الإجمالي
+                        <br/>
+                        <span class="text-muted"
+                              t-out="o._num2words(o.amount_total, 'ar_001')"/>
+                    </p>
 
-                            <strong>Total amount in words:</strong>
 
-                            <div>
-                                <span t-field="o.amount_total_words"/>
-                            </div>
+                    <!-- Payment Reference -->
+                    <div class="row"
+                         t-if="o.move_type in ('out_invoice', 'in_refund') and o.payment_reference">
 
+                        <div class="col-6">
+                            <strong>
+                                Payment Reference:
+                            </strong>
                         </div>
 
-                        <div class="mb-3 text-end">
-
-                            <strong>المبلغ الإجمالي</strong>
-
-                            <div>
-                                <span t-out="o._num2words(o.amount_total,'ar_001')"/>
-                            </div>
-
-                        </div>
-
-                    </t>
-
-                    <t t-if="o.payment_reference">
-
-                        <div class="mb-2">
-
-                            <strong>Payment Reference:</strong>
-
+                        <div class="col-6">
                             <span t-field="o.payment_reference"/>
-
                         </div>
 
-                    </t>
+                    </div>
 
-                    <t t-if="o.invoice_payment_term_id">
 
-                        <div class="mb-2">
+                    <!-- Payment Terms -->
+                    <p t-if="o.invoice_payment_term_id"
+                       name="payment_term">
+                        <span t-out="o.invoice_payment_term_id.note"/>
+                    </p>
 
-                            <strong>Payment Terms:</strong>
 
-                            <span t-out="o.invoice_payment_term_id.note"/>
-
-                        </div>
-
-                    </t>
-
-                    <t t-if="o.narration">
-
-                        <div class="mb-2">
-
-                            <strong>Terms &amp; Conditions:</strong>
-
-                            <span t-out="o.narration"/>
-
-                        </div>
-
-                    </t>
+                    <!-- Notes -->
+                    <p t-if="o.narration">
+                        <span t-out="o.narration"/>
+                    </p>
 
                 </div>
 
-                <!-- RIGHT SIDE -->
+
+                <!-- RIGHT SIDE TOTAL TABLE -->
                 <div class="col-6">
 
-                    <!-- هنا نعيد إدراج جدول VAT الأصلي -->
+                    <table class="o_total_table table table-borderless">
 
-                    <t t-call="0"/>
+                        <tr>
+                            <td class="text-end">
+                                <span t-field="o.amount_untaxed"/>
+                            </td>
+
+                            <td>
+                                <strong>
+                                    Subtotal /
+                                    الإجمالي الفرعي
+                                </strong>
+                            </td>
+                        </tr>
+
+
+                        <t t-set="tax_totals"
+                           t-value="o.tax_totals"/>
+
+                        <t t-set="currency"
+                           t-value="o.currency_id"/>
+
+
+                        <t t-foreach="tax_totals['subtotals']"
+                           t-as="subtotal">
+
+                            <t t-foreach="subtotal['tax_groups']"
+                               t-as="tax_group">
+
+                                <tr>
+                                    <td class="text-end">
+                                        <span t-out="tax_group['tax_amount_currency']"
+                                              t-options="{'widget':'monetary',
+                                              'display_currency':currency}"/>
+                                    </td>
+
+                                    <td>
+                                        <span t-out="tax_group['group_name']"/>
+                                    </td>
+
+                                </tr>
+
+                            </t>
+
+                        </t>
+
+
+                        <tr class="o_total">
+                            <td class="text-end">
+                                <span t-field="o.amount_total"/>
+                            </td>
+
+                            <td>
+                                <strong>
+                                    Total /
+                                    المجموع
+                                </strong>
+                            </td>
+                        </tr>
+
+                    </table>
 
                 </div>
 
@@ -726,4 +771,5 @@
         </xpath>
 
     </template>
+
 </odoo>
