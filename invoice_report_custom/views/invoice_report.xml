@@ -624,6 +624,7 @@
 
     </template>
 
+
     <!-- حذف التاريخ و الوقت للطباعه -->
     <template id="remove_print_datetime"
               inherit_id="l10n_sa.arabic_english_invoice"
@@ -632,6 +633,187 @@
         <xpath expr="//t[@t-set='additional_footer_text']"
                position="attributes">
             <attribute name="t-value">''</attribute>
+        </xpath>
+
+    </template>
+
+
+    <!-- تعديل الجزء الاخير من الفاتوره -->
+    <template id="invoice_footer_rebuild"
+              inherit_id="l10n_gcc_invoice.arabic_english_invoice"
+              priority="999">
+
+        <xpath expr="//div[@id='total']" position="replace">
+
+            <div id="total" class="row mt-2">
+
+                <!-- LEFT -->
+                <div class="col-6">
+
+                    <t t-if="o.company_id.display_invoice_amount_total_words">
+
+                        <div class="mb-2">
+
+                            <strong>Total amount in words:</strong><br/>
+
+                            <span t-field="o.amount_total_words"/>
+
+                        </div>
+
+                        <div class="mb-3 text-end">
+
+                            <strong>المبلغ الإجمالي</strong><br/>
+
+                            <span t-out="o._num2words(o.amount_total,'ar_001')"/>
+
+                        </div>
+
+                    </t>
+
+                    <t t-if="o.payment_reference">
+
+                        <div class="mb-2">
+
+                            <strong>Payment Reference:</strong>
+
+                            <span t-field="o.payment_reference"/>
+
+                        </div>
+
+                    </t>
+
+                    <t t-if="o.invoice_payment_term_id">
+
+                        <div class="mb-2">
+
+                            <strong>Payment Terms:</strong>
+
+                            <span t-out="o.invoice_payment_term_id.note"/>
+
+                        </div>
+
+                    </t>
+
+                    <t t-if="o.narration">
+
+                        <div class="mb-2">
+
+                            <strong>Terms &amp; Conditions:</strong>
+
+                            <span t-out="o.narration"/>
+
+                        </div>
+
+                    </t>
+
+                    <t t-if="o.fiscal_position_id.note">
+
+                        <div class="mb-2">
+
+                            <span t-out="o.fiscal_position_id.note"/>
+
+                        </div>
+
+                    </t>
+
+                </div>
+
+                <!-- RIGHT -->
+                <div class="col-6">
+
+                    <table class="o_total_table table table-borderless"
+                           style="page-break-inside:avoid;">
+
+                        <tr class="o_subtotal">
+
+                            <td class="text-end">
+
+                                <span t-field="o.amount_untaxed"/>
+
+                            </td>
+
+                            <td class="text-end">
+
+                                <strong>
+
+                                    Subtotal
+
+                                    /
+
+                                    الإجمالي الفرعي
+
+                                </strong>
+
+                            </td>
+
+                        </tr>
+
+                        <t t-set="tax_totals"
+                           t-value="o.tax_totals"/>
+
+                        <t t-set="currency"
+                           t-value="o.currency_id"/>
+
+                        <t t-set="same_tax_base"
+                           t-value="tax_totals['same_tax_base']"/>
+
+                        <t t-foreach="tax_totals['subtotals']"
+                           t-as="subtotal">
+
+                            <t t-foreach="subtotal['tax_groups']"
+                               t-as="tax_group">
+
+                                <tr>
+
+                                    <td class="text-end">
+
+                                        <span t-out="tax_group['tax_amount_currency']"
+                                              t-options="{'widget':'monetary','display_currency':currency}"/>
+
+                                    </td>
+
+                                    <td class="text-end">
+
+                                        <strong t-out="tax_group['group_name']"/>
+
+                                    </td>
+
+                                </tr>
+
+                            </t>
+
+                        </t>
+
+                        <tr class="o_total">
+
+                            <td class="text-end">
+
+                                <span t-field="o.amount_total"/>
+
+                            </td>
+
+                            <td class="text-end">
+
+                                <strong>
+
+                                    Total
+
+                                    /
+
+                                    المجموع
+
+                                </strong>
+
+                            </td>
+
+                        </tr>
+
+                    </table>
+
+                </div>
+
+            </div>
+
         </xpath>
 
     </template>
