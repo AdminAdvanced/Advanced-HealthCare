@@ -292,7 +292,7 @@
 
 
         <!-- Lot Columns -->
-        <xpath expr="//td[@name='account_invoice_line_name']" position="after">
+        <xpath expr="//td[@name='account_invoice_line_name']" position="before">
 
             <!-- SN / LOT -->
             <td class="text-center align-middle"
