@@ -337,7 +337,7 @@
 
             <td class="text-end" name="account_invoice_line_name">
 
-                <span t-field="line.product_id.name"/>
+                <span t-field="line.name"/>
                 <div style="direction: rtl; text-align: right;">
                     <t t-if="line.product_id.x_studio_product_name_ar">
                         <br/>
@@ -551,8 +551,8 @@
 
                     <div class="col-7 text-end">
                         <strong>
-                            Subtotal /
-                            الإجمالي الفرعي
+                            Total Taxable Amount (Excluding VAT) /
+                             الاجمالي الخاضع للضريبة (غير شامل الضريبة)
                         </strong>
                     </div>
 
@@ -609,9 +609,8 @@
 
                     <div class="col-7 text-end">
 
-                        Total /
-                        المجموع
-
+                       Invoice Total (Including VAT) /
+                        اجمالي الفاتورة شامل الضريبة
                     </div>
 
                 </div>
