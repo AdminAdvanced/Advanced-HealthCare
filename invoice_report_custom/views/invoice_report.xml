@@ -58,17 +58,11 @@
 
 
                 /* عناوين الجدول */
-               table thead th {
-                    font-size:10pt !important;
-                    font-weight:normal !important;
-                }
-
-                table thead th strong {
-                    font-weight:normal !important;
-                }
-
+                table thead th,
                 table thead th strong,
-                table thead th b {
+                table thead th b,
+                table thead th span {
+                    font-size:10pt !important;
                     font-weight:normal !important;
                 }
 
@@ -275,54 +269,21 @@
 
         <!-- Lot Headers -->
         <xpath expr="//th[@name='th_description']" position="before">
-
-            <th name="th_lot" class="text-center">
-                <span>SN/Lot</span>
-                <br/>
-                <span>رقم التسلسل/لوت</span>
-            </th>
-
             <th name="th_lot_qty" class="text-center">
                 <span>Lot Qty</span>
                 <br/>
                 <span>كمية اللوت</span>
             </th>
-
+            <th name="th_lot" class="text-center">
+                <span>SN/Lot</span>
+                <br/>
+                <span>رقم التسلسل/لوت</span>
+            </th>
         </xpath>
 
 
         <!-- Lot Columns -->
         <xpath expr="//td[@name='account_invoice_line_name']" position="before">
-
-            <!-- SN / LOT -->
-            <td class="text-center align-middle"
-                style="padding:0; vertical-align:top;">
-
-                <t t-set="lots"
-                   t-value="o.get_invoice_line_lots(line) or []"/>
-
-                <t t-foreach="lots" t-as="lot">
-
-                    <div t-att-style="
-                        'height:30px;
-                         line-height:30px;
-                         white-space:nowrap;
-                         overflow:hidden;
-                         text-align:center;
-                         font-family:Arial, sans-serif;
-                         font-size:8pt;
-                         font-weight:normal;
-                         border-bottom:' +
-                         ('0px' if lot_last else '1px') +
-                         ' solid #999;'
-                    ">
-                        <span t-esc="lot['lot_name']"/>
-                    </div>
-
-                </t>
-
-            </td>
-
 
             <!-- LOT QTY -->
             <td class="text-center align-middle"
@@ -354,6 +315,34 @@
 
             </td>
 
+            <!-- SN / LOT -->
+            <td class="text-center align-middle"
+                style="padding:0; vertical-align:top;">
+
+                <t t-set="lots"
+                   t-value="o.get_invoice_line_lots(line) or []"/>
+
+                <t t-foreach="lots" t-as="lot">
+
+                    <div t-att-style="
+                        'height:30px;
+                         line-height:30px;
+                         white-space:nowrap;
+                         overflow:hidden;
+                         text-align:center;
+                         font-family:Arial, sans-serif;
+                         font-size:8pt;
+                         font-weight:normal;
+                         border-bottom:' +
+                         ('0px' if lot_last else '1px') +
+                         ' solid #999;'
+                    ">
+                        <span t-esc="lot['lot_name']"/>
+                    </div>
+
+                </t>
+
+            </td>
         </xpath>
 
     </template>
