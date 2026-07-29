@@ -638,137 +638,17 @@
     </template>
 
 
-    <!-- تعديل الجزء الاخير من الفاتوره -->
-    <template id="custom_invoice_bottom_layout"
-              inherit_id="l10n_gcc_invoice.arabic_english_invoice">
+    <template id="test_invoice_inherit"
+          inherit_id="l10n_gcc_invoice.arabic_english_invoice">
 
-        <xpath expr="//div[@id='total']" position="replace">
-            <div class="row mt-n3">
+    <xpath expr="//table[hasclass('o_total_table')]"
+       position="before">
+        <div>
+            TEST CUSTOM INVOICE
+        </div>
 
-                <!-- LEFT SIDE -->
-                <div class="col-6">
+    </xpath>
 
-                    <!-- Amount words -->
-                    <p class="lh-sm"
-                       t-if="o.company_id.display_invoice_amount_total_words">
-                        Total amount in words:
-                        <br/>
-                        <span class="text-muted"
-                              t-field="o.amount_total_words"/>
-                    </p>
-
-                    <p class="lh-sm"
-                       t-if="o.company_id.display_invoice_amount_total_words">
-                        المبلغ الإجمالي
-                        <br/>
-                        <span class="text-muted"
-                              t-out="o._num2words(o.amount_total, 'ar_001')"/>
-                    </p>
-
-
-                    <!-- Payment Reference -->
-                    <div class="row"
-                         t-if="o.move_type in ('out_invoice', 'in_refund') and o.payment_reference">
-
-                        <div class="col-6">
-                            <strong>
-                                Payment Reference:
-                            </strong>
-                        </div>
-
-                        <div class="col-6">
-                            <span t-field="o.payment_reference"/>
-                        </div>
-
-                    </div>
-
-
-                    <!-- Payment Terms -->
-                    <p t-if="o.invoice_payment_term_id"
-                       name="payment_term">
-                        <span t-out="o.invoice_payment_term_id.note"/>
-                    </p>
-
-
-                    <!-- Notes -->
-                    <p t-if="o.narration">
-                        <span t-out="o.narration"/>
-                    </p>
-
-                </div>
-
-
-                <!-- RIGHT SIDE TOTAL TABLE -->
-                <div class="col-6">
-
-                    <table class="o_total_table table table-borderless">
-
-                        <tr>
-                            <td class="text-end">
-                                <span t-field="o.amount_untaxed"/>
-                            </td>
-
-                            <td>
-                                <strong>
-                                    Subtotal /
-                                    الإجمالي الفرعي
-                                </strong>
-                            </td>
-                        </tr>
-
-
-                        <t t-set="tax_totals"
-                           t-value="o.tax_totals"/>
-
-                        <t t-set="currency"
-                           t-value="o.currency_id"/>
-
-
-                        <t t-foreach="tax_totals['subtotals']"
-                           t-as="subtotal">
-
-                            <t t-foreach="subtotal['tax_groups']"
-                               t-as="tax_group">
-
-                                <tr>
-                                    <td class="text-end">
-                                        <span t-out="tax_group['tax_amount_currency']"
-                                              t-options="{'widget':'monetary',
-                                              'display_currency':currency}"/>
-                                    </td>
-
-                                    <td>
-                                        <span t-out="tax_group['group_name']"/>
-                                    </td>
-
-                                </tr>
-
-                            </t>
-
-                        </t>
-
-
-                        <tr class="o_total">
-                            <td class="text-end">
-                                <span t-field="o.amount_total"/>
-                            </td>
-
-                            <td>
-                                <strong>
-                                    Total /
-                                    المجموع
-                                </strong>
-                            </td>
-                        </tr>
-
-                    </table>
-
-                </div>
-
-            </div>
-
-        </xpath>
-
-    </template>
+</template>
 
 </odoo>
