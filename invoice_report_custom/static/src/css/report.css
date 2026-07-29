@@ -2,3 +2,13 @@
     width: 180px !important;
     height: 180px !important;
 }
+@font-face {
+    font-family: 'Arial';
+}
+
+.ar-font{
+    font-family: 'Arial', sans-serif !important;
+}
+.page {
+    font-family: Arial, sans-serif !important;
+}

@@ -1,0 +1,10 @@
+@font-face {
+    font-family: 'Arial';
+}
+
+.ar-font{
+    font-family:'Arial' !important;
+}
+.page {
+    font-family: Arial, sans-serif !important;
+}
