@@ -638,17 +638,18 @@
     </template>
 
 
-    <template id="test_invoice_inherit"
-          inherit_id="l10n_gcc_invoice.arabic_english_invoice">
+    <template id="custom_invoice_bottom_layout"
+              inherit_id="l10n_gcc_invoice.arabic_english_invoice">
 
-    <xpath expr="//table[hasclass('o_total_table')]"
-       position="before">
-        <div>
-            TEST CUSTOM INVOICE
-        </div>
+        <xpath expr="//div[hasclass('mb-2')][p[@t-if='o.company_id.display_invoice_amount_total_words']]"
+               position="attributes">
 
-    </xpath>
+            <attribute name="class">
+                mb-2 col-6
+            </attribute>
 
-</template>
+        </xpath>
+
+    </template>
 
 </odoo>
