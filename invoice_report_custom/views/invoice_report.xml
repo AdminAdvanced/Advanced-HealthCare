@@ -34,14 +34,6 @@
 
             <style>
 
-                /* كامل الفاتورة */
-                .page {
-                    font-family: Arial, sans-serif !important;
-                    font-size: 8pt;
-                    font-weight: normal;
-                }
-
-
                 /* العناوين الرئيسية */
                 h1, h2, h3,
                 .invoice-title,
@@ -60,10 +52,10 @@
 
 
                 /* عناوين الجدول */
-                table thead th,
-                table thead th strong,
-                table thead th b,
-                table thead th span {
+                table[name="invoice_line_table"] thead th,
+                table[name="invoice_line_table"] thead th strong,
+                table[name="invoice_line_table"] thead th b,
+                table[name="invoice_line_table"] thead th span {
                     font-size:10pt !important;
                     font-weight:normal !important;
                     font-family: Arial, sans-serif !important;
@@ -78,11 +70,51 @@
                 }
 
 
-                /* منع أي Bold غير مطلوب */
-                span,
-                div,
-                td {
-                    font-family: Arial, sans-serif !important;
+                 /* Description column */
+                table[name="invoice_line_table"] th[name="th_description"],
+                table[name="invoice_line_table"] td[name="account_invoice_line_name"]{
+                    width: 45% !important;
+                }
+
+
+                /* Quantity column */
+                table[name="invoice_line_table"] th[name="th_quantity"],
+                table[name="invoice_line_table"] td[name="account_invoice_line_quantity"] {
+                    width: 8% !important;
+                }
+
+
+                /* Unit Price */
+                table[name="invoice_line_table"] th[name="th_priceunit"],
+                table[name="invoice_line_table"] td[name="account_invoice_line_price_unit"] {
+                    width: 10% !important;
+                }
+
+
+                /* Taxes */
+                table[name="invoice_line_table"] th[name="th_taxes"],
+                table[name="invoice_line_table"] td[name="account_invoice_line_taxes"] {
+                    width: 8% !important;
+                }
+
+
+                /* Subtotal columns */
+                table[name="invoice_line_table"] th[name="th_subtotal"],
+                table[name="invoice_line_table"] td[name="account_invoice_line_subtotal"] {
+                    width: 12% !important;
+                }
+
+
+                table[name="invoice_line_table"] th[name="th_subtotal_incl"],
+                table[name="invoice_line_table"] td[name="account_invoice_line_subtotal_incl"] {
+                    width: 12% !important;
+                }
+
+
+                .table-sm th,
+                .table-sm td {
+                    padding-top: 2px !important;
+                    padding-bottom: 2px !important;
                 }
 
             </style>
