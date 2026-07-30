@@ -42,6 +42,7 @@ class ResPartner(models.Model):
                 ('name', operator, name),
                 ('x_studio_name_ar', operator, name),
                 ('vat', operator, name),  # الرقم الضريبي
+                ('contact_code', operator, name),
             ]
         else:
             domain = []
