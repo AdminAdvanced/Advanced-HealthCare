@@ -38,7 +38,7 @@ class ResPartner(models.Model):
 
         if name:
             domain = [
-                '|', '|',
+                '|', '|', '|',
                 ('name', operator, name),
                 ('x_studio_name_ar', operator, name),
                 ('vat', operator, name),  # الرقم الضريبي
