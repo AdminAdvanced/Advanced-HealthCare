@@ -1,0 +1,52 @@
+<odoo>
+
+    <record id="product_category_form_sequence"
+            model="ir.ui.view">
+
+        <field name="name">product.category.form.sequence</field>
+
+        <field name="model">product.category</field>
+
+        <field name="inherit_id" ref="product.product_category_form_view"/>
+
+        <field name="arch" type="xml">
+            <!--
+                إضافة Section خاص بالـ Product Sequence
+                في نهاية الـ Sheet
+            -->
+            <xpath expr="//sheet" position="inside">
+
+                <separator string="Product Sequence"/>
+                <group>
+
+                    <!--
+                        Checkbox:
+                        يحدد أن هذه الكاتجوري هي آخر مستوى
+                    -->
+                    <field name="is_sequence_category"/>
+                </group>
+
+                <!--
+                    تظهر إعدادات السيكونس فقط عند تفعيل Checkbox
+                -->
+                <group invisible="not is_sequence_category">
+
+                    <field name="sequence_prefix"/>
+
+                    <field name="sequence_padding"/>
+
+                    <field name="sequence_step"/>
+
+                    <field name="sequence_next_number"/>
+
+                </group>
+
+
+            </xpath>
+
+
+        </field>
+
+    </record>
+
+</odoo>

@@ -3,6 +3,7 @@
     "version": "18.0.1.0.0",
     "category": "Sales",
     "summary": "Simple Sales Management without Delivery and Invoice",
+    "author": "Advanced Event Solution / Bushra Alamarnah",
 
     "depends": [
         "base",
