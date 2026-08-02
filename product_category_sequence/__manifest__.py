@@ -1,6 +1,7 @@
 {
     "name": "Product Category Sequence",
     "version": "18.0.1.0.0",
+    "license": "LGPL-3",
     "author": "Advanced Event Solution / Bushra Alamarnah",
     "summary": """
         Generate automatic product internal reference
