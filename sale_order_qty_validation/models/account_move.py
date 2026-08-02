@@ -98,6 +98,7 @@ class AccountMove(models.Model):
                         "product": sale_line.product_id.display_name,
                         "ordered": ordered_qty,
                         "previous": invoiced_before,
+                        "allowed": ordered_qty - invoiced_before,
                         "current": qty,
                         "total": total,
                     })
@@ -117,8 +118,8 @@ class AccountMove(models.Model):
                         "Product: %(product)s\n"
                         "Ordered Quantity: %(ordered)s\n"
                         "Already Invoiced: %(previous)s\n"
-                        "Current Invoice: %(current)s\n"
-                        "Total: %(total)s\n\n",
+                        "Current Delivery: %(current)s\n"
+                        "Allowed Delivery: %(allowed)s\n",
                         **error
                     )
 
