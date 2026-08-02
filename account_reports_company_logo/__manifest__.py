@@ -4,7 +4,7 @@
     "version": "18.0.1.0.0",
     "category": "Accounting",
     "summary": "Adds company logo to Accounting PDF reports",
-    "author": "Your Company",
+    "author": "Advanced Event Solution / Bushra Alamarnah",
     "license": "LGPL-3",
 
     "depends": [
