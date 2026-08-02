@@ -9,10 +9,9 @@ class StockPicking(models.Model):
 
     def _get_sale_line_delivered_qty(self, sale_line, exclude_picking=None):
         """
-        Return delivered quantity from completed deliveries
-        for a specific sale order line.
+                Return delivered quantity from completed deliveries
+                for a specific sale order line.
         """
-
         qty = 0.0
 
         moves = sale_line.move_ids.filtered(
@@ -23,17 +22,35 @@ class StockPicking(models.Model):
         )
 
         for move in moves:
-            qty += move.product_uom._compute_quantity(
+
+            converted_qty = move.product_uom._compute_quantity(
                 move.quantity,
                 sale_line.product_uom
             )
 
-        return qty
+            # Normal Delivery
+            if move.location_dest_id.usage == "customer":
+                qty += converted_qty
 
+            # Return from customer
+            elif move.location_id.usage == "customer":
+                qty -= converted_qty
+
+        return qty
 
     def button_validate(self):
 
         for picking in self:
+
+            # Skip validation for return pickings
+            # Return must be validated first so it can affect delivered quantity
+            is_return = any(
+                move.origin_returned_move_id
+                for move in picking.move_ids_without_package
+            )
+
+            if is_return:
+                continue
 
             errors = []
 
@@ -75,6 +92,7 @@ class StockPicking(models.Model):
                         "product": sale_line.product_id.display_name,
                         "ordered": ordered_qty,
                         "previous": delivered_before,
+                        "allowed": ordered_qty - delivered_before,
                         "current": qty,
                         "total": total,
                     })
@@ -93,7 +111,7 @@ class StockPicking(models.Model):
                         "Ordered Quantity: %(ordered)s\n"
                         "Already Delivered: %(previous)s\n"
                         "Current Delivery: %(current)s\n"
-                        "Total: %(total)s\n\n",
+                        "Allowed Delivery: %(allowed)s\n",
                         **error
                     )
 
