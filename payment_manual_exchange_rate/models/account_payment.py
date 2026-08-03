@@ -2,9 +2,6 @@
 
 from odoo import models, fields, api
 
-from odoo import models, fields, api
-
-
 class AccountPayment(models.Model):
     _inherit = "account.payment"
 
@@ -97,6 +94,13 @@ class AccountPayment(models.Model):
         Balance calculation:
         USD amount / 0.30 = SAR balance
         """
+        import logging
+        _logger = logging.getLogger(__name__)
+
+        _logger.warning(
+            ">>> _prepare_move_lines_per_type called. Rate=%s",
+            self.exchange_rate,
+        )
 
         self.ensure_one()
 
