@@ -21,6 +21,12 @@ class AccountPayment(models.Model):
         compute="_compute_exchange_rate_label"
     )
 
+    @api.model
+    def _get_trigger_fields_to_synchronize(self):
+        return super()._get_trigger_fields_to_synchronize() + (
+            'exchange_rate',
+        )
+
     @api.depends(
         "currency_id",
         "company_currency_id",
@@ -79,69 +85,41 @@ class AccountPayment(models.Model):
             else:
                 payment.exchange_rate_label = False
 
-
-    def _prepare_move_lines_per_type(self, write_off_line_vals=None, force_balance=None):
-        """
-        Override Odoo payment journal item preparation
-        to use manual exchange rate when provided.
-
-        Manual rate format:
-        1 Company Currency = X Payment Currency
-
-        Example:
-        1 SAR = 0.30 USD
-
-        Balance calculation:
-        USD amount / 0.30 = SAR balance
-        """
-        import logging
-        _logger = logging.getLogger(__name__)
-
-        _logger.warning(
-            ">>> _prepare_move_lines_per_type called. Rate=%s",
-            self.exchange_rate,
-        )
-
-        self.ensure_one()
-
-        line_vals_per_type = super()._prepare_move_lines_per_type(
+    def _prepare_move_line_default_vals(
+        self,
+        write_off_line_vals=None,
+        force_balance=None
+    ):
+        line_vals_list = super()._prepare_move_line_default_vals(
             write_off_line_vals=write_off_line_vals,
             force_balance=force_balance,
         )
 
+        self.ensure_one()
+
         if (
-                self.currency_id != self.company_currency_id
-                and self.exchange_rate
+            self.currency_id != self.company_id.currency_id
+            and self.exchange_rate
         ):
 
-            liquidity_lines = line_vals_per_type.get(
-                'liquidity_lines',
-                []
+            # amount in foreign currency
+            liquidity_amount_currency = line_vals_list[0]['amount_currency']
+
+            # 1 company currency = X foreign currency
+            liquidity_balance = (
+                liquidity_amount_currency / self.exchange_rate
             )
 
-            counterpart_lines = line_vals_per_type.get(
-                'counterpart_lines',
-                []
-            )
-
-            # Update liquidity line balance
-            for line in liquidity_lines:
-                amount_currency = line.get('amount_currency', 0.0)
-
-                if amount_currency:
-                    line['balance'] = (
-                            amount_currency / self.exchange_rate
-                    )
-
-            # Keep journal entry balanced
-            liquidity_balance = sum(
-                line.get('balance', 0.0)
-                for line in liquidity_lines
-            )
+            line_vals_list[0].update({
+                'debit': liquidity_balance if liquidity_balance > 0 else 0.0,
+                'credit': -liquidity_balance if liquidity_balance < 0 else 0.0,
+            })
 
             counterpart_balance = -liquidity_balance
 
-            for line in counterpart_lines:
-                line['balance'] = counterpart_balance
+            line_vals_list[1].update({
+                'debit': counterpart_balance if counterpart_balance > 0 else 0.0,
+                'credit': -counterpart_balance if counterpart_balance < 0 else 0.0,
+            })
 
-        return line_vals_per_type
+        return line_vals_list
