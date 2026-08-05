@@ -8,7 +8,7 @@
     ],
     "data": [
         "views/account_payment_views.xml",
-        'views/account_payment_register_views.xml',
+        'views/account_payment_register.xml',
     ],
     "installable": True,
     "application": False,
