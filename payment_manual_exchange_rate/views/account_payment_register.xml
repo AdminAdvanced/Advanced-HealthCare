@@ -41,7 +41,9 @@
                         class="btn btn-link btn-sm">
 
                         <i class="fa fa-refresh"/>
-
+                        <span class="visually-hidden">
+                            Refresh Exchange Rate
+                        </span>
                     </button>
 
                 </div>
