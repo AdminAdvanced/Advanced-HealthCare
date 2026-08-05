@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="view_account_payment_register_exchange_rate" model="ir.ui.view">
+
+        <field name="name">account.payment.register.exchange.rate</field>
+
+        <field name="model">account.payment.register</field>
+
+        <field name="inherit_id" ref="account.view_account_payment_register_form"/>
+
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='amount']" position="after">
+
+                <div
+                    class="text-muted mt-1"
+                    invisible="currency_id == company_currency_id">
+
+                    <span>
+                        1
+                        <field name="company_currency_id"
+                               nolabel="1"
+                               readonly="1"/>
+
+                        =
+                    </span>
+
+                    <field name="exchange_rate"
+                           nolabel="1"/>
+
+                    <span>
+                        <field name="currency_id"
+                               nolabel="1"
+                               readonly="1"/>
+                    </span>
+
+                    <button
+                        name="action_refresh_exchange_rate"
+                        type="object"
+                        class="btn btn-link btn-sm">
+
+                        <i class="fa fa-refresh"/>
+                        <span class="visually-hidden">
+                            Refresh Exchange Rate
+                        </span>
+                    </button>
+
+                </div>
+
+            </xpath>
+
+        </field>
+
+    </record>
+</odoo>
