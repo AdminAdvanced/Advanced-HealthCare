@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
-import logging
 
-_logger = logging.getLogger(__name__)
 class AccountPayment(models.Model):
     _inherit = "account.payment"
 
@@ -22,41 +20,6 @@ class AccountPayment(models.Model):
     exchange_rate_label = fields.Char(
         compute="_compute_exchange_rate_label"
     )
-
-    def write(self, vals):
-        _logger.warning("========================================")
-        _logger.warning("WRITE PAYMENT IDS: %s", self.ids)
-        _logger.warning("VALS: %s", vals)
-
-        res = super().write(vals)
-
-        for payment in self:
-            _logger.warning(
-                "AFTER WRITE -> id=%s exchange_rate=%s state=%s",
-                payment.id,
-                payment.exchange_rate,
-                payment.state,
-            )
-
-        return res
-
-    def _synchronize_to_moves(self, changed_fields):
-
-        _logger.warning("========================================")
-        _logger.warning(
-            "SYNC PAYMENT %s changed_fields=%s",
-            self.ids,
-            changed_fields,
-        )
-
-        for payment in self:
-            _logger.warning(
-                "SYNC RATE=%s STATE=%s",
-                payment.exchange_rate,
-                payment.state,
-            )
-
-        return super()._synchronize_to_moves(changed_fields)
 
     @api.model
     def _get_trigger_fields_to_synchronize(self):
