@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
+import logging
 
+_logger = logging.getLogger(__name__)
 class AccountPayment(models.Model):
     _inherit = "account.payment"
 
@@ -20,6 +22,41 @@ class AccountPayment(models.Model):
     exchange_rate_label = fields.Char(
         compute="_compute_exchange_rate_label"
     )
+
+    def write(self, vals):
+        _logger.warning("========================================")
+        _logger.warning("WRITE PAYMENT IDS: %s", self.ids)
+        _logger.warning("VALS: %s", vals)
+
+        res = super().write(vals)
+
+        for payment in self:
+            _logger.warning(
+                "AFTER WRITE -> id=%s exchange_rate=%s state=%s",
+                payment.id,
+                payment.exchange_rate,
+                payment.state,
+            )
+
+        return res
+
+    def _synchronize_to_moves(self, changed_fields):
+
+        _logger.warning("========================================")
+        _logger.warning(
+            "SYNC PAYMENT %s changed_fields=%s",
+            self.ids,
+            changed_fields,
+        )
+
+        for payment in self:
+            _logger.warning(
+                "SYNC RATE=%s STATE=%s",
+                payment.exchange_rate,
+                payment.state,
+            )
+
+        return super()._synchronize_to_moves(changed_fields)
 
     @api.model
     def _get_trigger_fields_to_synchronize(self):
@@ -85,41 +122,40 @@ class AccountPayment(models.Model):
             else:
                 payment.exchange_rate_label = False
 
-    def _prepare_move_line_default_vals(
-        self,
-        write_off_line_vals=None,
-        force_balance=None
+    def _prepare_move_lines_per_type(
+            self,
+            write_off_line_vals=None,
+            force_balance=None,
     ):
-        line_vals_list = super()._prepare_move_line_default_vals(
+        self.ensure_one()
+
+        line_vals_per_type = super()._prepare_move_lines_per_type(
             write_off_line_vals=write_off_line_vals,
             force_balance=force_balance,
         )
 
-        self.ensure_one()
-
         if (
-            self.currency_id != self.company_id.currency_id
-            and self.exchange_rate
+                self.currency_id != self.company_currency_id
+                and self.exchange_rate
         ):
 
-            # amount in foreign currency
-            liquidity_amount_currency = line_vals_list[0]['amount_currency']
+            liquidity_lines = line_vals_per_type.get('liquidity_lines', [])
+            counterpart_lines = line_vals_per_type.get('counterpart_lines', [])
 
-            # 1 company currency = X foreign currency
-            liquidity_balance = (
-                liquidity_amount_currency / self.exchange_rate
+            for line in liquidity_lines:
+                amount_currency = line.get('amount_currency', 0.0)
+
+                if amount_currency:
+                    line['balance'] = amount_currency / self.exchange_rate
+
+            liquidity_balance = sum(
+                line.get('balance', 0.0)
+                for line in liquidity_lines
             )
-
-            line_vals_list[0].update({
-                'debit': liquidity_balance if liquidity_balance > 0 else 0.0,
-                'credit': -liquidity_balance if liquidity_balance < 0 else 0.0,
-            })
 
             counterpart_balance = -liquidity_balance
 
-            line_vals_list[1].update({
-                'debit': counterpart_balance if counterpart_balance > 0 else 0.0,
-                'credit': -counterpart_balance if counterpart_balance < 0 else 0.0,
-            })
+            for line in counterpart_lines:
+                line['balance'] = counterpart_balance
 
-        return line_vals_list
+        return line_vals_per_type
