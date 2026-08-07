@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="view_account_payment_register_exchange_rate" model="ir.ui.view">
+
+        <field name="name">account.payment.register.exchange.rate</field>
+
+        <field name="model">account.payment.register</field>
+
+        <field name="inherit_id" ref="account.view_account_payment_register_form"/>
+
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='payment_method_line_id']" position="after">
+                <xpath expr="//field[@name='communication']" position="move"/>
+            </xpath>
+            <xpath expr="//group[@name='group2']" position="replace">
+
+                <group name="group2">
+
+                    <!-- Payment Date First -->
+                    <field name="payment_date"/>
+
+
+                    <!-- Amount -->
+                    <label for="amount"/>
+
+                    <div name="amount_div" class="o_row">
+
+                        <field name="amount"
+                               force_save="1"
+                               readonly="not can_edit_wizard or can_group_payments and not group_payment"/>
+
+                        <field name="currency_id"
+                               required="1"
+                               options="{'no_create': True, 'no_open': True}"
+                               invisible="not can_edit_wizard or can_group_payments and not group_payment"
+                               groups="base.group_multi_currency"/>
+
+                    </div>
+
+
+                    <field name="installments_switch_html"
+                           string=""
+                           widget="account_payment_register_html"
+                           invisible="not installments_switch_html"/>
+
+
+                    <!-- Exchange Rate -->
+                    <div class="d-flex align-items-center gap-2 text-muted small mt-2"
+                         invisible="currency_id == company_currency_id">
+
+                        <span>1</span>
+
+                        <field name="company_currency_id"
+                               nolabel="1"
+                               readonly="1"
+                               class="oe_inline"/>
+
+                        <span>=</span>
+
+                        <field name="exchange_rate"
+                               nolabel="1"
+                               class="oe_inline"/>
+
+                        <field name="currency_id"
+                               nolabel="1"
+                               readonly="1"
+                               class="oe_inline"/>
+
+                        <button
+                            name="action_refresh_exchange_rate"
+                            type="object"
+                            class="btn btn-link btn-sm p-0"
+                            title="Refresh Exchange Rate">
+
+                            <i class="fa fa-refresh"
+                               title="Refresh Exchange Rate"/>
+
+                        </button>
+
+                    </div>
+                </group>
+
+            </xpath>
+
+
+        </field>
+
+    </record>
+</odoo>
