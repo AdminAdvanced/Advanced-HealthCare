@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates xml:space="preserve">
+
+    <t t-name="print_preview_all.PrintPreviewDialog">
+
+        <Dialog title="'Print Preview'" size="'extra-large'">
+
+            <!-- PDF AREA -->
+            <div
+                style="
+                    position: relative;
+                    width: 100%;
+                    height: 75vh;
+                    min-height: 500px;
+                    background: #525659;
+                    overflow: hidden;
+                "
+            >
+
+                <!-- LOADING -->
+                <div
+                    t-if="state.loading"
+                    style="
+                        position: absolute;
+                        inset: 0;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        background: #f8f9fa;
+                        z-index: 10;
+                    "
+                >
+
+                    <div
+                        class="spinner-border text-primary"
+                        role="status"
+                        style="
+                            width: 3rem;
+                            height: 3rem;
+                            margin-bottom: 20px;
+                        "
+                    >
+                        <span class="visually-hidden">
+                            Loading...
+                        </span>
+                    </div>
+
+                    <div
+                        style="
+                            font-size: 17px;
+                            font-weight: 500;
+                            color: #343a40;
+                            margin-bottom: 6px;
+                        "
+                    >
+                        Preparing document...
+                    </div>
+
+                    <div
+                        style="
+                            font-size: 13px;
+                            color: #6c757d;
+                        "
+                    >
+                        Please wait while your document is being prepared.
+                    </div>
+
+                </div>
+
+
+                <!-- ERROR -->
+                <div
+                    t-if="state.error"
+                    style="
+                        position: absolute;
+                        inset: 0;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        background: #f8f9fa;
+                        z-index: 10;
+                        text-align: center;
+                    "
+                >
+
+                    <div
+                        style="
+                            font-size: 42px;
+                            color: #dc3545;
+                            margin-bottom: 15px;
+                        "
+                    >
+                        <i class="fa fa-exclamation-circle"/>
+                    </div>
+
+                    <div
+                        style="
+                            font-size: 17px;
+                            font-weight: 500;
+                            color: #343a40;
+                            margin-bottom: 6px;
+                        "
+                    >
+                        Unable to load the document
+                    </div>
+
+                    <div
+                        style="
+                            font-size: 13px;
+                            color: #6c757d;
+                        "
+                    >
+                        Please close this window and try again.
+                    </div>
+
+                </div>
+
+
+                <!-- PDF -->
+                <iframe
+                    t-ref="pdfFrame"
+                    t-att-class="state.loading || state.error ? 'd-none' : ''"
+                    t-att-src="props.pdfUrl"
+                    t-on-load="onPdfLoaded"
+                    t-on-error="onPdfError"
+                    style="
+                        width: 100%;
+                        height: 100%;
+                        border: none;
+                        display: block;
+                        background: white;
+                    "
+                />
+
+            </div>
+
+
+            <!-- FOOTER -->
+            <t t-set-slot="footer">
+
+                <!-- PRINT -->
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                    t-att-disabled="state.loading || state.error"
+                    t-on-click="onPrint"
+                >
+                    <i class="fa fa-print me-1"/>
+                    Print
+                </button>
+
+
+                <!-- DOWNLOAD -->
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    t-att-disabled="state.loading || state.error"
+                    t-on-click="onDownload"
+                >
+                    <i class="fa fa-download me-1"/>
+                    Download
+                </button>
+
+
+                <!-- CLOSE -->
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    t-on-click="props.close"
+                >
+                    Close
+                </button>
+
+            </t>
+
+        </Dialog>
+
+    </t>
+
+</templates>
