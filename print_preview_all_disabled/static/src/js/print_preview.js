@@ -1,6 +1,6 @@
 /** @odoo-module **/
 
-import { Component, onMounted, useRef } from "@odoo/owl";
+import { Component, onMounted, useRef, useState } from "@odoo/owl";
 import { Dialog } from "@web/core/dialog/dialog";
 import { registry } from "@web/core/registry";
 import { getReportUrl } from "@web/webclient/actions/reports/utils";
@@ -24,6 +24,11 @@ class PrintPreviewDialog extends Component {
     setup() {
         this.pdfFrame = useRef("pdfFrame");
 
+        this.state = useState({
+            loading: true,
+            error: false,
+        });
+
         onMounted(() => {
             if (this.pdfFrame.el) {
                 this.pdfFrame.el.src = this.props.pdfUrl;
@@ -31,14 +36,24 @@ class PrintPreviewDialog extends Component {
         });
     }
 
-    /**
-     * Print the PDF currently displayed in the iframe.
-     */
+    onPdfLoaded() {
+        console.log("PDF loaded successfully");
+
+        this.state.loading = false;
+        this.state.error = false;
+    }
+
+    onPdfError() {
+        console.error("Failed to load PDF");
+
+        this.state.loading = false;
+        this.state.error = true;
+    }
+
     onPrint() {
         const iframe = this.pdfFrame.el;
 
-        if (!iframe) {
-            console.error("PDF iframe was not found.");
+        if (!iframe || this.state.loading || this.state.error) {
             return;
         }
 
@@ -50,10 +65,11 @@ class PrintPreviewDialog extends Component {
         }
     }
 
-    /**
-     * Download the PDF using Odoo's standard report download endpoint.
-     */
     async onDownload() {
+        if (this.state.loading || this.state.error) {
+            return;
+        }
+
         try {
             await download({
                 url: this.props.downloadUrl,
@@ -74,9 +90,6 @@ async function printPreviewReportHandler(action, options, env) {
         return false;
     }
 
-    /*
-     * Generate the normal Odoo PDF URL.
-     */
     const pdfUrl = getReportUrl(
         action,
         "pdf",
@@ -85,9 +98,6 @@ async function printPreviewReportHandler(action, options, env) {
 
     console.log("PDF URL:", pdfUrl);
 
-    /*
-     * Same endpoint used by Odoo's standard downloadReport().
-     */
     const downloadUrl = "/report/download";
 
     const downloadData = {
@@ -100,9 +110,6 @@ async function printPreviewReportHandler(action, options, env) {
         ),
     };
 
-    /*
-     * Open the preview popup.
-     */
     env.services.dialog.add(
         PrintPreviewDialog,
         {
@@ -112,10 +119,6 @@ async function printPreviewReportHandler(action, options, env) {
         }
     );
 
-    /*
-     * Prevent Odoo from executing its normal
-     * downloadReport() afterwards.
-     */
     return true;
 }
 
