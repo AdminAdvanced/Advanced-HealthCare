@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 from odoo import models
 
 
@@ -23,49 +25,82 @@ class AccountMove(models.Model):
 
     def get_invoice_line_lots(self, invoice_line):
         """
-        Return only the lots that belong to THIS invoice line.
-        Works for:
-        - Sales Orders
-        - Deliveries
-        - Partial Deliveries
-        - Multiple Lots
-        - Same product repeated several times
+        Return only the lots that actually belong to this invoice line.
+
+        Customer Invoice:
+            Only OUTGOING stock moves are considered.
+
+        Customer Credit Note:
+            Only RETURN / INCOMING stock moves are considered.
+
+        Lots are aggregated by lot so the same lot is not displayed
+        multiple times when it exists in multiple stock moves.
         """
 
         self.ensure_one()
 
-        result = []
+        result = defaultdict(lambda: {
+            "lot_name": "",
+            "quantity": 0.0,
+            "uom_name": "",
+        })
 
-        # Get stock moves linked to this invoice line only
+        # ---------------------------------------------------------
+        # Get stock moves related to this invoice line
+        # ---------------------------------------------------------
         stock_moves = invoice_line.sale_line_ids.mapped("move_ids").filtered(
-            lambda m: m.state == "done"
+            lambda move: move.state == "done"
         )
+
+        # ---------------------------------------------------------
+        # Determine whether this is an Invoice or Credit Note
+        # ---------------------------------------------------------
+        is_credit_note = self.move_type == "out_refund"
 
         for move in stock_moves:
 
-            move_lines = move.move_line_ids.filtered(lambda ml: ml.lot_id)
+            # -----------------------------------------------------
+            # CUSTOMER INVOICE
+            # We only want goods delivered TO the customer.
+            #
+            # Example:
+            # Internal -> Customer
+            # -----------------------------------------------------
+            if not is_credit_note:
+
+                if move.location_dest_id.usage != "customer":
+                    continue
+
+            # -----------------------------------------------------
+            # CUSTOMER CREDIT NOTE
+            # We only want goods returned FROM the customer.
+            #
+            # Example:
+            # Customer -> Internal
+            # -----------------------------------------------------
+            else:
+
+                if move.location_id.usage != "customer":
+                    continue
+
+            # -----------------------------------------------------
+            # Get move lines containing lots
+            # -----------------------------------------------------
+            move_lines = move.move_line_ids.filtered(
+                lambda ml: ml.lot_id
+            )
 
             for ml in move_lines:
 
-                result.append({
-                    "lot_name": ml.lot_id.name,
-                    "quantity": ml.quantity,
-                    "uom_name": ml.product_uom_id.name,
-                })
+                lot = ml.lot_id
 
-        # Remove duplicates if any
-        unique = []
-        seen = set()
+                if not lot:
+                    continue
 
-        for item in result:
-            key = (
-                item["lot_name"],
-                item["quantity"],
-                item["uom_name"],
-            )
+                key = lot.id
 
-            if key not in seen:
-                seen.add(key)
-                unique.append(item)
+                result[key]["lot_name"] = lot.name
+                result[key]["quantity"] += ml.quantity
+                result[key]["uom_name"] = ml.product_uom_id.name
 
-        return unique
+        return list(result.values())
