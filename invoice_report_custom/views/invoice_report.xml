@@ -365,6 +365,11 @@
 
         <!-- Lot Headers -->
         <xpath expr="//th[@name='th_description']" position="before">
+             <th name="th_expiration_date" class="text-center">
+                <span>Expiration Date</span>
+                <br/>
+                <span>تاريخ الانتهاء</span>
+            </th>
             <th name="th_lot_qty" class="text-center">
                 <span>Lot Qty</span>
                 <br/>
@@ -375,11 +380,41 @@
                 <br/>
                 <span>رقم التسلسل/لوت</span>
             </th>
+
         </xpath>
 
 
         <!-- Lot Columns -->
         <xpath expr="//td[@name='account_invoice_line_name']" position="before">
+
+            <!-- EXPIRATION DATE -->
+            <td class="text-center align-middle"
+    style="padding:0; vertical-align:top;">
+
+    <t t-set="lots"
+       t-value="o.get_invoice_line_lots(line) or []"/>
+
+    <t t-foreach="lots" t-as="lot">
+
+        <div t-att-style="
+            'height:30px;
+             line-height:30px;
+             white-space:nowrap;
+             overflow:hidden;
+             text-align:center;
+             font-family:Arial, sans-serif;
+             font-size:8pt;
+             font-weight:normal;
+             border-bottom:' +
+             ('0px' if lot_last else '1px') +
+             ' solid #999;'
+        ">
+            <span t-esc="lot['expiration_date']"/>
+        </div>
+
+    </t>
+
+</td>
 
             <!-- LOT QTY -->
             <td class="text-center align-middle"
