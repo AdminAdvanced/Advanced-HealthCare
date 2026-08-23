@@ -365,7 +365,7 @@
 
         <!-- Lot Headers -->
         <xpath expr="//th[@name='th_description']" position="before">
-             <th name="th_expiration_date" class="text-center">
+            <th name="th_expiration_date" class="text-center">
                 <span>Expiration Date</span>
                 <br/>
                 <span>تاريخ الانتهاء</span>
@@ -409,8 +409,7 @@
                          ('0px' if lot_last else '1px') +
                          ' solid #999;'
                     ">
-                        <span>TEST</span>
-                        <!--<span t-esc="lot['expiration_date']"/>-->
+                        <span t-esc="lot['expiration_date']"/>
                     </div>
 
                 </t>
