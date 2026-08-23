@@ -1,5 +1,9 @@
 from odoo import api, fields, models
 
+class SaleOrderLine(models.Model):
+    _inherit = 'sale.order.line'
+
+    pricelist_item_id = fields.Many2one(store=True)
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
