@@ -358,7 +358,7 @@
     </template>
 
 
-    <!--  اضافه Lot و Lot Qty للجدول الاساسي -->
+    <!--  اضافه Lot و Lot Qty و EXPIRATION DATE للجدول الاساسي -->
     <template id="invoice_lot_column"
               inherit_id="l10n_gcc_invoice.arabic_english_invoice"
               priority="99">
@@ -389,32 +389,33 @@
 
             <!-- EXPIRATION DATE -->
             <td class="text-center align-middle"
-    style="padding:0; vertical-align:top;">
+                style="padding:0; vertical-align:top;">
 
-    <t t-set="lots"
-       t-value="o.get_invoice_line_lots(line) or []"/>
+                <t t-set="lots"
+                   t-value="o.get_invoice_line_lots(line) or []"/>
 
-    <t t-foreach="lots" t-as="lot">
+                <t t-foreach="lots" t-as="lot">
 
-        <div t-att-style="
-            'height:30px;
-             line-height:30px;
-             white-space:nowrap;
-             overflow:hidden;
-             text-align:center;
-             font-family:Arial, sans-serif;
-             font-size:8pt;
-             font-weight:normal;
-             border-bottom:' +
-             ('0px' if lot_last else '1px') +
-             ' solid #999;'
-        ">
-            <span t-esc="lot['expiration_date']"/>
-        </div>
+                    <div t-att-style="
+                        'height:30px;
+                         line-height:30px;
+                         white-space:nowrap;
+                         overflow:hidden;
+                         text-align:center;
+                         font-family:Arial, sans-serif;
+                         font-size:8pt;
+                         font-weight:normal;
+                         border-bottom:' +
+                         ('0px' if lot_last else '1px') +
+                         ' solid #999;'
+                    ">
+                        <span>TEST</span>
+                        <!--<span t-esc="lot['expiration_date']"/>-->
+                    </div>
 
-    </t>
+                </t>
 
-</td>
+            </td>
 
             <!-- LOT QTY -->
             <td class="text-center align-middle"
