@@ -43,6 +43,7 @@ class AccountMove(models.Model):
             "lot_name": "",
             "quantity": 0.0,
             "uom_name": "",
+            "expiration_date": "",
         })
 
         # ---------------------------------------------------------
@@ -62,9 +63,6 @@ class AccountMove(models.Model):
             # -----------------------------------------------------
             # CUSTOMER INVOICE
             # We only want goods delivered TO the customer.
-            #
-            # Example:
-            # Internal -> Customer
             # -----------------------------------------------------
             if not is_credit_note:
 
@@ -74,9 +72,6 @@ class AccountMove(models.Model):
             # -----------------------------------------------------
             # CUSTOMER CREDIT NOTE
             # We only want goods returned FROM the customer.
-            #
-            # Example:
-            # Customer -> Internal
             # -----------------------------------------------------
             else:
 
@@ -102,5 +97,14 @@ class AccountMove(models.Model):
                 result[key]["lot_name"] = lot.name
                 result[key]["quantity"] += ml.quantity
                 result[key]["uom_name"] = ml.product_uom_id.name
+
+                # -------------------------------------------------
+                # LOT EXPIRATION DATE
+                # -------------------------------------------------
+                result[key]["expiration_date"] = (
+                    lot.expiration_date.strftime("%d/%m/%Y")
+                    if lot.expiration_date
+                    else ""
+                )
 
         return list(result.values())
