@@ -385,7 +385,7 @@
 
 
         <!-- Lot Columns -->
-        <xpath expr="//td[@name='account_invoice_line_name']/parent::tr" position="inside">
+        <xpath expr="//td[@name='account_invoice_line_name']" position="before">
 
             <!-- EXPIRATION DATE -->
             <td class="text-center align-middle"
