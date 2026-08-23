@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <record id="view_partner_form_sale_credit_control" model="ir.ui.view">
+        <field name="name">res.partner.form.sale.credit.control</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+
+             <xpath expr="//field[@name='credit_limit']/ancestor::group[1]" position="inside">
+                 <field name="confirmed_uninvoiced_sales"/>
+                 <field name="available_credit"/>
+            </xpath>
+
+        </field>
+    </record>
+
+
+      <record id="view_sale_order_form_credit_control" model="ir.ui.view">
+        <field name="name">sale.order.form.credit.control</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="discount_approval_required"/>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>
