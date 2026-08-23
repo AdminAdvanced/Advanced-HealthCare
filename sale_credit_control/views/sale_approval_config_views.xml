@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Form View -->
+    <record id="view_sale_approval_config_form" model="ir.ui.view">
+        <field name="name">sale.approval.config.form</field>
+        <field name="model">sale.approval.config</field>
+        <field name="arch" type="xml">
+            <form string="Sales Approval Configuration">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <separator string="Approval Rules"/>
+                    <div class="alert alert-info" role="alert">
+                        Enable or disable the approval rules that should be applied to Sales Orders.
+                    </div>
+                   <group string="Approval Rules">
+
+                        <group>
+
+                            <field name="enable_discount_approval"
+                                   string="Excess Discount Approval"
+                                   help="Requires approval when the sales order discount exceeds the discount allowed by the pricelist."/>
+
+                            <field name="enable_credit_limit_approval"
+                                   string="Credit Limit Approval"
+                                   help="Requires approval when the sales order exceeds the customer's available credit."/>
+
+                        </group>
+
+                        <group>
+
+                            <field name="enable_overdue_approval"
+                                   string="Overdue Invoices Approval"
+                                   help="Requires approval when the customer has overdue unpaid invoices."/>
+
+                            <field name="enable_uninvoiced_sales_approval"
+                                   string="Uninvoiced Sales Approval"
+                                   help="Requires approval when the customer has confirmed sales orders that have not been fully invoiced."/>
+
+                        </group>
+
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- List View -->
+    <record id="view_sale_approval_config_list" model="ir.ui.view">
+        <field name="name">sale.approval.config.list</field>
+        <field name="model">sale.approval.config</field>
+        <field name="arch" type="xml">
+            <list string="Sales Approval Configuration">
+                <field name="name"/>
+                <field name="enable_discount_approval"/>
+                <field name="enable_credit_limit_approval"/>
+                <field name="enable_overdue_approval"/>
+                <field name="enable_uninvoiced_sales_approval"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_sales_approval_config" model="ir.actions.act_window">
+        <field name="name">Approval Rules</field>
+        <field name="res_model">sale.approval.config</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Menu Item (Updated action reference) -->
+    <menuitem
+        id="menu_sales_approval_config"
+        name="Approval Rules"
+        parent="sale.menu_sale_config"
+        action="action_sales_approval_config"
+        sequence="10"
+        groups="sales_team.group_sale_manager"
+    />
+
+</odoo>
