@@ -358,92 +358,73 @@
     </template>
 
 
-    <!--  اضافه Lot و Lot Qty و EXPIRATION DATE للجدول الاساسي -->
+    <!-- اضافه Lot و Lot Qty و EXPIRATION DATE للجدول الاساسي -->
     <template id="invoice_lot_column"
-              inherit_id="l10n_gcc_invoice.arabic_english_invoice"
-              priority="99">
+          inherit_id="l10n_gcc_invoice.arabic_english_invoice"
+          priority="99">
 
-        <!-- Lot Headers -->
-        <xpath expr="//th[@name='th_description']" position="before">
-            <th name="th_expiration_date" class="text-center">
-                <span>Expiration Date</span>
-                <br/>
-                <span>تاريخ الانتهاء</span>
-            </th>
+    <!-- 1. ضبط عرض العمود المجاور (Description) ليفسح مسافة للأعمدة الجديدة -->
+    <xpath expr="//th[@name='th_description']" position="attributes">
+        <attribute name="style">width: 22%;</attribute>
+    </xpath>
 
-            <th name="th_lot" class="text-center">
-                <span>SN/Lot</span>
-                <br/>
-                <span>رقم التسلسل/لوت</span>
-            </th>
+    <!-- 2. إضافة رؤوس الأعمدة مع تحديد عرض صريح لكل عمود (style="width: ...") -->
+    <xpath expr="//th[@name='th_description']" position="before">
+        <th name="th_expiration_date" class="text-center" style="width: 10%; max-width: 65px; word-break: break-word;">
+            <span>Expiration Date</span>
+            <br/>
+            <span>تاريخ الانتهاء</span>
+        </th>
+        <th name="th_lot_qty" class="text-center" style="width: 8%; max-width: 50px; word-break: break-word;">
+            <span>Lot Qty</span>
+            <br/>
+            <span>كمية اللوت</span>
+        </th>
+        <th name="th_lot" class="text-center" style="width: 10%; max-width: 65px; word-break: break-word;">
+            <span>SN/Lot</span>
+            <br/>
+            <span>رقم التسلسل/لوت</span>
+        </th>
+    </xpath>
 
-        </xpath>
 
+    <!-- 3. إضافة خلايا البيانات بنفس النسب بالضبط -->
+    <xpath expr="//td[@name='account_invoice_line_name']" position="before">
 
-        <!-- Lot Columns -->
-        <xpath expr="//td[@name='account_invoice_line_name']" position="before">
+        <!-- EXPIRATION DATE -->
+        <td class="text-center align-middle" style="width: 10%; padding: 2px; vertical-align: top;">
+            <t t-set="lots" t-value="o.get_invoice_line_lots(line) or []"/>
+            <t t-foreach="lots" t-as="lot">
+                <div t-att-style="'height: 25px; line-height: 25px; white-space: nowrap; overflow: hidden; text-align: center; font-family: Arial, sans-serif; font-size: 7pt; font-weight: normal; border-bottom:' + ('0px' if lot_last else '1px') + ' solid #999;'">
+                    <span t-esc="lot['expiration_date']"/>
+                </div>
+            </t>
+        </td>
 
-            <!-- EXPIRATION DATE -->
-            <td class="text-center align-middle"
-                style="padding:0; vertical-align:top;">
+        <!-- LOT QTY -->
+        <td class="text-center align-middle" style="width: 8%; padding: 2px; vertical-align: top;">
+            <t t-set="lots" t-value="o.get_invoice_line_lots(line) or []"/>
+            <t t-foreach="lots" t-as="lot">
+                <div t-att-style="'height: 25px; line-height: 25px; white-space: nowrap; overflow: hidden; text-align: center; font-family: Arial, sans-serif; font-size: 7pt; font-weight: normal; border-bottom:' + ('0px' if lot_last else '1px') + ' solid #999;'">
+                    <span t-esc="lot['quantity']"/>
+                    <span t-esc="lot['uom_name']"/>
+                </div>
+            </t>
+        </td>
 
-                <t t-set="lots"
-                   t-value="o.get_invoice_line_lots(line) or []"/>
+        <!-- SN / LOT -->
+        <td class="text-center align-middle" style="width: 10%; padding: 2px; vertical-align: top;">
+            <t t-set="lots" t-value="o.get_invoice_line_lots(line) or []"/>
+            <t t-foreach="lots" t-as="lot">
+                <div t-att-style="'height: 25px; line-height: 25px; white-space: nowrap; overflow: hidden; text-align: center; font-family: Arial, sans-serif; font-size: 7pt; font-weight: normal; border-bottom:' + ('0px' if lot_last else '1px') + ' solid #999;'">
+                    <span t-esc="lot['lot_name']"/>
+                </div>
+            </t>
+        </td>
 
-                <t t-foreach="lots" t-as="lot">
+    </xpath>
 
-                    <div t-att-style="
-                        'height:30px;
-                         line-height:30px;
-                         white-space:nowrap;
-                         overflow:hidden;
-                         text-align:center;
-                         font-family:Arial, sans-serif;
-                         font-size:8pt;
-                         font-weight:normal;
-                         border-bottom:' +
-                         ('0px' if lot_last else '1px') +
-                         ' solid #999;'
-                    ">
-                        <span t-esc="lot['expiration_date']"/>
-                    </div>
-
-                </t>
-
-            </td>
-
-            <!-- SN / LOT -->
-            <td class="text-center align-middle"
-                style="padding:0; vertical-align:top;">
-
-                <t t-set="lots"
-                   t-value="o.get_invoice_line_lots(line) or []"/>
-
-                <t t-foreach="lots" t-as="lot">
-
-                    <div t-att-style="
-                        'height:30px;
-                         line-height:30px;
-                         white-space:nowrap;
-                         overflow:hidden;
-                         text-align:center;
-                         font-family:Arial, sans-serif;
-                         font-size:8pt;
-                         font-weight:normal;
-                         border-bottom:' +
-                         ('0px' if lot_last else '1px') +
-                         ' solid #999;'
-                    ">
-                        <span t-esc="lot['lot_name']"/>
-                    </div>
-
-                </t>
-
-            </td>
-        </xpath>
-
-    </template>
-
+</template>
 
     <!--  تعديل التايتل على للجدول الاساسي -->
     <template id="invoice_headers_custom"
