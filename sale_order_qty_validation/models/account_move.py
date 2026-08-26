@@ -118,8 +118,8 @@ class AccountMove(models.Model):
                         "Product: %(product)s\n"
                         "Ordered Quantity: %(ordered)s\n"
                         "Already Invoiced: %(previous)s\n"
-                        "Current Delivery: %(current)s\n"
-                        "Allowed Delivery: %(allowed)s\n",
+                        "Current Invoiced: %(current)s\n"
+                        "Allowed Invoiced: %(allowed)s\n",
                         **error
                     )
 
