@@ -21,6 +21,9 @@ class ResUsers(models.Model):
     def _is_delete_restricted(self, records):
         self.ensure_one()
 
+        if not records:
+            return False
+
         if self.hide_delete_all:
             return True
 
@@ -39,4 +42,3 @@ class ResUsers(models.Model):
             return True
 
         return model_name in user.delete_restriction_ids.mapped("model")
-
