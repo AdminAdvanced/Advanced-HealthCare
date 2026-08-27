@@ -3,7 +3,6 @@
 import { patch } from "@web/core/utils/patch";
 import { useService } from "@web/core/utils/hooks";
 import { onWillStart } from "@odoo/owl";
-
 import { ListController } from "@web/views/list/list_controller";
 import { FormController } from "@web/views/form/form_controller";
 
@@ -49,17 +48,6 @@ patch(ListController.prototype, {
                 model
             );
 
-            console.log(
-                "DELETE CONTROL LIST:",
-                model,
-                "restricted =",
-                this.deleteRestricted
-            );
-
-            console.log(
-                "DELETE CONTROL LIST ACTIVE ACTIONS:",
-                this.archInfo?.activeActions
-            );
         });
     },
 
@@ -68,14 +56,6 @@ patch(ListController.prototype, {
 
         const model = this.props.resModel;
         const activeActions = this.archInfo?.activeActions;
-
-        console.log("========== LIST DELETE DEBUG ==========");
-        console.log("MODEL:", model);
-        console.log("RESTRICTED:", this.deleteRestricted);
-        console.log("ACTIVE ACTIONS:", activeActions);
-        console.log("ACTIVE ACTIONS DELETE:", activeActions?.delete);
-        console.log("DELETE ITEM:", items.delete);
-        console.log("=======================================");
 
         if (items.delete && this.deleteRestricted) {
             items.delete.isAvailable = () => false;
@@ -105,17 +85,6 @@ patch(FormController.prototype, {
                 model
             );
 
-            console.log(
-                "DELETE CONTROL FORM:",
-                model,
-                "restricted =",
-                this.deleteRestricted
-            );
-
-            console.log(
-                "DELETE CONTROL FORM ACTIVE ACTIONS:",
-                this.archInfo?.activeActions
-            );
         });
     },
 
@@ -124,14 +93,6 @@ patch(FormController.prototype, {
 
         const model = this.props.resModel;
         const activeActions = this.archInfo?.activeActions;
-
-        console.log("========== FORM DELETE DEBUG ==========");
-        console.log("MODEL:", model);
-        console.log("RESTRICTED:", this.deleteRestricted);
-        console.log("ACTIVE ACTIONS:", activeActions);
-        console.log("ACTIVE ACTIONS DELETE:", activeActions?.delete);
-        console.log("DELETE ITEM:", items.delete);
-        console.log("=======================================");
 
         if (items.delete && this.deleteRestricted) {
             items.delete.isAvailable = () => false;
