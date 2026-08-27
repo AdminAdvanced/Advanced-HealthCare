@@ -4,15 +4,25 @@
     "category": "Administration",
     "summary": "Control delete permissions per user and record type",
     "description": """
-        Allows administrators to control delete permissions per user.
-
-        Features:
-        - Hide delete option globally
-        - Hide delete option for specific record types
-        - Backend protection against unlink()
-        - UI protection for list and form views
-    """,
-    "author": "Advanced Event Solution",
+        User Delete Control
+        ===================
+        
+        Allows administrators to control delete permissions for individual users
+        and specific record types.
+        
+        Features
+        --------
+        * Globally restrict delete permissions for selected users.
+        * Restrict deletion for specific record types.
+        * Backend protection against unauthorized unlink() operations.
+        * UI protection for list and form views.
+        * Easy configuration from the user form.
+        
+        This module helps administrators prevent accidental or unauthorized
+        record deletion while keeping normal Odoo workflows unchanged.
+        """,
+    "author": "Bushra AlAmarnah",
+    "website": "https://github.com/bushraamarnah/odoo-delete-permissions-control",
     "license": "LGPL-3",
     "depends": [
         "base",
