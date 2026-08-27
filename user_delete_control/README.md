@@ -53,6 +53,22 @@ A user can be configured to:
 | Restrict Products and Contacts    | User cannot delete Products or Contacts                          |
 | No restrictions                   | Normal Odoo deletion behavior                                    |
 
+## Screenshots
+
+### Delete Permissions Control
+
+Configure deletion permissions directly from the user's Access Rights.
+
+![Delete Permissions Control](static/description/screenshots/01-delete-permissions-settings.png)
+![Delete Permissions Control](static/description/screenshots/02-delete.png)$
+
+### Restricted Delete Action
+
+When deletion is restricted, the Delete action is hidden from the user interface.
+
+![Restricted Delete Action](static/description/screenshots/03-delete.png)
+![Restricted Delete Action](static/description/screenshots/04-delete.png)
+
 ## Installation
 
 1. Download or clone the module.
