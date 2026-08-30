@@ -1,19 +1,37 @@
-# -*- coding: utf-8 -*-
+from odoo import models
 
-# from odoo import models, fields, api
+class AccountMoveLine(models.Model):
+    _inherit = "account.move.line"
 
+    def unlink(self):
+        """
+        Journal lines belonging to Draft Journal Entries can be
+        internally removed and recreated by Odoo while editing the
+        Draft Journal Entry.
 
-# class user_delete_control(models.Model):
-#     _name = 'user_delete_control.user_delete_control'
-#     _description = 'user_delete_control.user_delete_control'
+        Delete Control must not block those internal operations.
+        """
 
-#     name = fields.Char()
-#     value = fields.Integer()
-#     value2 = fields.Float(compute="_value_pc", store=True)
-#     description = fields.Text()
-#
-#     @api.depends('value')
-#     def _value_pc(self):
-#         for record in self:
-#             record.value2 = float(record.value) / 100
+        draft_lines = self.filtered(
+            lambda line: line.move_id
+            and line.move_id.state == "draft"
+        )
+
+        other_lines = self - draft_lines
+
+        result = True
+
+        if draft_lines:
+            result = super(
+                AccountMoveLine,
+                draft_lines,
+            ).unlink()
+
+        if other_lines:
+            result = super(
+                AccountMoveLine,
+                other_lines,
+            ).unlink() and result
+
+        return result
 
