@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Digits ZATCA | Tax Total (Fix Issue)</title>
+    <style>
+        .dg-wrap {
+            font-family: 'Montserrat', 'Segoe UI', sans-serif;
+            background-color: #f8f9fa;
+            padding: 32px 16px;
+        }
+        .dg-inner { max-width: 960px; margin: 0 auto; }
+        .dg-wrap img { max-width: 100%; height: auto; display: block; }
+        .dg-hero {
+            display: flex; flex-wrap: wrap; align-items: center;
+            gap: 24px; margin-bottom: 32px;
+        }
+        .dg-hero-text { flex: 1 1 340px; min-width: 280px; }
+        .dg-hero-icon { flex: 0 0 160px; text-align: center; }
+        .dg-hero-icon img { width: 140px; margin: 0 auto; }
+        .dg-logo { width: 180px; margin-bottom: 12px; }
+        .dg-title {
+            color: #00A09D; font-weight: 700; font-size: 30px;
+            line-height: 1.25; margin: 0 0 12px;
+        }
+        .dg-lead { color: #4a5568; font-size: 16px; line-height: 1.6; margin: 0; }
+        .dg-tags { margin-top: 16px; }
+        .dg-tag {
+            display: inline-block; color: #fff; padding: 7px 16px;
+            border-radius: 50px; font-weight: 600; font-size: 13px;
+            margin: 0 6px 6px 0;
+        }
+        .dg-banner {
+            width: 100%; border-radius: 14px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08); margin-bottom: 32px;
+        }
+        .dg-h2 {
+            color: #2d3748; font-weight: 700; font-size: 22px;
+            border-bottom: 3px solid #00A09D; display: inline-block;
+            padding-bottom: 6px; margin: 0 0 12px;
+        }
+        .dg-p { color: #4a5568; font-size: 15px; line-height: 1.6; }
+        .dg-section { margin-bottom: 32px; }
+        .dg-shot {
+            max-width: 720px; margin: 0 auto; border-radius: 10px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.12); border: 1px solid #e2e8f0;
+        }
+        .dg-caption {
+            color: #718096; font-size: 13px; margin-top: 10px;
+            text-align: center; line-height: 1.5;
+        }
+        .dg-cards { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 32px; }
+        .dg-card {
+            flex: 1 1 240px; background: #fff; padding: 22px;
+            border-radius: 14px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .dg-card h3 { font-size: 16px; font-weight: 600; color: #2d3748; margin: 0 0 8px; }
+        .dg-card p { color: #718096; font-size: 14px; line-height: 1.6; margin: 0; }
+        .dg-code {
+            background: #1a202c; color: #e2e8f0; padding: 18px;
+            border-radius: 10px; text-align: left; overflow: auto;
+            font-size: 12.5px; line-height: 1.55; direction: ltr;
+        }
+        .dg-list { color: #4a5568; font-size: 15px; line-height: 1.8; }
+        .dg-footer {
+            display: flex; flex-wrap: wrap; align-items: center; gap: 20px;
+            background: linear-gradient(135deg, #00A09D 0%, #875A7B 100%);
+            border-radius: 18px; padding: 28px; color: #fff;
+        }
+        .dg-footer-text { flex: 1 1 320px; }
+        .dg-footer h4 { font-weight: 700; margin: 0 0 6px; font-size: 18px; }
+        .dg-footer p { opacity: 0.95; margin: 0; font-size: 14px; }
+        .dg-btn {
+            background: #fff; color: #00A09D; padding: 12px 24px;
+            border-radius: 50px; font-weight: 700; text-decoration: none;
+            display: inline-block; font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<section class="dg-wrap">
+    <div class="dg-inner">
+
+        <div class="dg-hero">
+            <div class="dg-hero-text">
+                <img class="dg-logo" src="digits_logo.png" alt="DigitsCode" width="180" height="82"/>
+                <h1 class="dg-title">Digits ZATCA | Tax Total (Fix Issue)</h1>
+                <p class="dg-lead">
+                    Temporary fix for the recurring ZATCA chatter warning
+                    <b>BR-KSA-EN16931-09</b> on SAR invoices. Uninstall it when
+                    Odoo 18 core restores the second TaxTotal node.
+                </p>
+                <p class="dg-tags">
+                    <span class="dg-tag" style="background-color: #c05621;">Fix Issue</span>
+                    <span class="dg-tag" style="background-color: #00A09D;">Odoo 18</span>
+                    <span class="dg-tag" style="background-color: #875A7B;">l10n_sa_edi</span>
+                </p>
+            </div>
+            <div class="dg-hero-icon">
+                <img src="icon.png" alt="Digits ZATCA Tax Total icon" width="140" height="140"/>
+            </div>
+        </div>
+
+        <img class="dg-banner" src="banner.png" alt="Digits ZATCA Tax Total banner" width="1100" height="445"/>
+
+        <div class="dg-section">
+            <h2 class="dg-h2">The warning in Odoo</h2>
+            <p class="dg-p">
+                After a successful send, ZATCA accepts the invoice and Odoo
+                posts this yellow message on the invoice chatter. The invoice
+                is valid; the XML structure is incomplete for SAR documents.
+            </p>
+            <img class="dg-shot" src="screenshot_zatca_warning.png"
+                 alt="Invoice was Accepted by ZATCA with warning BR-KSA-EN16931-09"
+                 width="1056" height="451"/>
+            <p class="dg-caption">
+                Screenshot: chatter warning <code>[202] BR-KSA-EN16931-09</code>
+                — Only one tax total (BG-22) without tax subtotals (BG-23)
+                must be provided when tax currency code is provided.
+            </p>
+        </div>
+
+        <div class="dg-cards">
+            <div class="dg-card">
+                <h3>1. Cause</h3>
+                <p>
+                    Odoo 18 always sends <code>TaxCurrencyCode</code> (SAR).
+                    A core change then omitted the second TaxTotal on SAR invoices.
+                </p>
+            </div>
+            <div class="dg-card">
+                <h3>2. ZATCA rule</h3>
+                <p>
+                    When tax currency code is present, XML must include one
+                    <code>cac:TaxTotal</code> <b>without</b> <code>TaxSubtotal</code> (BT-111).
+                </p>
+            </div>
+            <div class="dg-card">
+                <h3>3. This module</h3>
+                <p>
+                    Restores that second node for SAR invoices. Foreign-currency
+                    invoices are left unchanged (no duplicate).
+                </p>
+            </div>
+        </div>
+
+        <div class="dg-section">
+            <h2 class="dg-h2">Required XML shape</h2>
+<pre class="dg-code">&lt;cbc:DocumentCurrencyCode&gt;SAR&lt;/cbc:DocumentCurrencyCode&gt;
+&lt;cbc:TaxCurrencyCode&gt;SAR&lt;/cbc:TaxCurrencyCode&gt;
+
+&lt;cac:TaxTotal&gt;
+    &lt;cbc:TaxAmount currencyID="SAR"&gt;...&lt;/cbc:TaxAmount&gt;
+    &lt;cac:TaxSubtotal&gt;...&lt;/cac:TaxSubtotal&gt;   &lt;!-- WITH breakdown --&gt;
+&lt;/cac:TaxTotal&gt;
+&lt;cac:TaxTotal&gt;
+    &lt;cbc:TaxAmount currencyID="SAR"&gt;...&lt;/cbc:TaxAmount&gt;
+    &lt;!-- WITHOUT TaxSubtotal  (restored by this module) --&gt;
+&lt;/cac:TaxTotal&gt;</pre>
+        </div>
+
+        <div class="dg-section">
+            <h2 class="dg-h2">Install</h2>
+            <ol class="dg-list">
+                <li>Install <b>Digits ZATCA | Tax Total (Fix Issue)</b> (<code>digits_zatca_tax_total</code>).</li>
+                <li>Depends only on <code>l10n_sa_edi</code>.</li>
+                <li>New invoices sent to ZATCA after install will not show this warning.</li>
+                <li>Already-sent invoices stay accepted; they are not re-submitted.</li>
+            </ol>
+        </div>
+
+        <div class="dg-footer">
+            <div class="dg-footer-text">
+                <h4>DigitsCode</h4>
+                <p>Digital Integrated Transformation Solutions — Odoo ERP and ZATCA integration.</p>
+            </div>
+            <div>
+                <a class="dg-btn" href="mailto:info@digitscode.com">info@digitscode.com</a>
+            </div>
+        </div>
+
+    </div>
+</section>
+</body>
+</html>
