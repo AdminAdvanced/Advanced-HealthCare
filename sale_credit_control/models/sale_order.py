@@ -75,11 +75,19 @@ class SaleOrder(models.Model):
         return True
 
     def action_approve_order(self):
-        """ New button to be pressed by approvers defined in Odoo Studio """
+        """Approve the order and confirm it."""
         for order in self:
-            # Execute standard confirmation and convert to Sales Order
+            if order.state != 'waiting_approval':
+                continue
+
+            order.write({'state': 'draft'})
+
             super(SaleOrder, order).action_confirm()
-            order.message_post(body=_("Sales Order has been approved and confirmed."))
+
+            order.message_post(
+                body=_("Sales Order has been approved and confirmed.")
+            )
+
         return True
 
     @api.depends(
