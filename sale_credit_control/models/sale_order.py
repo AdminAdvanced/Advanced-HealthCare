@@ -8,18 +8,6 @@ class SaleOrderLine(models.Model):
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    approval_state = fields.Selection(
-        [
-            ('not_required', 'Not Required'),
-            ('pending', 'Pending Approval'),
-            ('approved', 'Approved'),
-            ('rejected', 'Rejected'),
-        ],
-        string='Approval Status',
-        default='not_required',
-        copy=False,
-    )
-
     discount_approval_required = fields.Boolean(
         string='Discount Approval Required',
         compute='_compute_approval_requirements',
@@ -200,18 +188,3 @@ class SaleOrder(models.Model):
             )
 
             order.approval_reason = '\n'.join(reasons)
-
-    def action_confirm(self):
-        orders_to_confirm = self.env['sale.order']
-
-        for order in self:
-
-            if order.approval_required and order.approval_state != 'approved':
-                order.approval_state = 'pending'
-            else:
-                orders_to_confirm |= order
-
-        if orders_to_confirm:
-            return super(SaleOrder, orders_to_confirm).action_confirm()
-
-        return True
