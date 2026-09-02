@@ -6,8 +6,9 @@
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
 
-            <!-- تعديل ترتيب الشريط ليظهر Waiting Approval قبل Sales Order -->
+            <!-- إعادة تحديد خيارات شريط الحالات العلوي -->
             <xpath expr="//field[@name='state']" position="attributes">
+                <attribute name="widget">statusbar</attribute>
                 <attribute name="statusbar_visible">draft,sent,waiting_approval,sale</attribute>
             </xpath>
 
