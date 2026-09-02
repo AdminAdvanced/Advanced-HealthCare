@@ -1,4 +1,4 @@
-from odoo import api, fields, models
+from odoo import api, fields, models, _
 
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
@@ -43,6 +43,38 @@ class SaleOrder(models.Model):
         compute='_compute_approval_requirements',
         store=True,
     )
+
+    state = fields.Selection(selection_add=[
+        ('waiting_approval', 'Waiting Approval')
+    ], ondelete={'waiting_approval': 'set default'})
+
+    def action_confirm(self):
+        """ Standard Confirm Button """
+        for order in self:
+            # 1. If no approval is required -> Convert immediately to Sales Order
+            if not order.approval_required:
+                return super(SaleOrder, order).action_confirm()
+
+            # 2. If approval is required -> Change state to "Waiting Approval"
+            order.write({'state': 'waiting_approval'})
+
+            # Format reasons with line breaks for Chatter
+            formatted_reasons = order.approval_reason.replace('\n', '<br/>') if order.approval_reason else ''
+
+            order.message_post(
+                body=_(
+                    "<b>Order blocked and pending management approval due to the following reasons:</b><br/>%s"
+                ) % formatted_reasons
+            )
+        return True
+
+    def action_approve_order(self):
+        """ New button to be pressed by approvers defined in Odoo Studio """
+        for order in self:
+            # Execute standard confirmation and convert to Sales Order
+            super(SaleOrder, order).action_confirm()
+            order.message_post(body=_("Sales Order has been approved and confirmed."))
+        return True
 
     @api.depends(
         'partner_id',
