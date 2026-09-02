@@ -45,20 +45,8 @@ class SaleOrder(models.Model):
     )
 
     state = fields.Selection(
-        selection=[
-            ('draft', 'Quotation'),
-            ('sent', 'Quotation Sent'),
-            ('waiting_approval', 'Waiting Approval'),
-            ('sale', 'Sales Order'),
-            ('done', 'Locked'),
-            ('cancel', 'Cancelled'),
-        ],
-        string='Status',
-        readonly=True,
-        copy=False,
-        index=True,
-        tracking=3,
-        default='draft',
+        selection_add=[('waiting_approval', 'Waiting Approval')],
+        ondelete={'waiting_approval': 'set default'}
     )
 
     def action_confirm(self):

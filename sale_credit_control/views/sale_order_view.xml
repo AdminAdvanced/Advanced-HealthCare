@@ -6,7 +6,7 @@
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
 
-            <!-- تحديث ترتيب الشريط العلوي -->
+            <!-- تحديث ترتيب ظهور الحالات بالشريط العلوي بوضع waiting_approval قبل sale -->
             <xpath expr="//field[@name='state']" position="attributes">
                 <attribute name="statusbar_visible">draft,sent,waiting_approval,sale</attribute>
             </xpath>
