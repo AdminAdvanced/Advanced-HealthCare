@@ -44,9 +44,15 @@ class SaleOrder(models.Model):
         store=True,
     )
 
-    state = fields.Selection(selection_add=[
-        ('waiting_approval', 'Waiting Approval')
-    ], ondelete={'waiting_approval': 'set default'})
+    state = fields.Selection(
+        selection_add=[
+            ('waiting_approval', 'Waiting Approval'),
+            ('sale',),
+        ],
+        ondelete={
+            'waiting_approval': 'set default',
+        },
+    )
 
     def action_confirm(self):
         """ Standard Confirm Button """
