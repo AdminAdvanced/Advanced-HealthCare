@@ -12,6 +12,7 @@
         'security/ir.model.access.csv',
         'views/res_partner_views.xml',
         'views/sale_approval_config_views.xml',
+        'views/sale_order_view.xml',
     ],
     'installable': True,
     'application': False,
