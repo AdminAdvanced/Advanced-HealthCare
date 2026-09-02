@@ -6,13 +6,12 @@
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
 
-            <!-- إعادة تحديد خيارات شريط الحالات العلوي -->
+            <!-- تحديث ترتيب الشريط العلوي -->
             <xpath expr="//field[@name='state']" position="attributes">
-                <attribute name="widget">statusbar</attribute>
                 <attribute name="statusbar_visible">draft,sent,waiting_approval,sale</attribute>
             </xpath>
 
-            <!-- إظهار زر الموافقات عندما تكون الحالة waiting_approval فقط -->
+            <!-- إظهار زر الموافقات في حالة waiting_approval فقط -->
             <xpath expr="//header" position="inside">
                 <button name="action_approve_order"
                         string="Approve Order"

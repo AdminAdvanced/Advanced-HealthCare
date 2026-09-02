@@ -44,11 +44,21 @@ class SaleOrder(models.Model):
         store=True,
     )
 
-    # قم بتعديل هذا الجزء في كود البايثون لديك
     state = fields.Selection(
-        selection_add=[('waiting_approval', 'Waiting Approval')],
-        ondelete={'waiting_approval': 'set default'},
-        before='sale'
+        selection=[
+            ('draft', 'Quotation'),
+            ('sent', 'Quotation Sent'),
+            ('waiting_approval', 'Waiting Approval'),
+            ('sale', 'Sales Order'),
+            ('done', 'Locked'),
+            ('cancel', 'Cancelled'),
+        ],
+        string='Status',
+        readonly=True,
+        copy=False,
+        index=True,
+        tracking=3,
+        default='draft',
     )
 
     def action_confirm(self):
