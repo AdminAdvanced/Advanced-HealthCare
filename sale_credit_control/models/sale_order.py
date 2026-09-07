@@ -1,4 +1,4 @@
-from odoo import api, fields, models
+from odoo import api, fields, models, _
 
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
@@ -7,18 +7,6 @@ class SaleOrderLine(models.Model):
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
-
-    approval_state = fields.Selection(
-        [
-            ('not_required', 'Not Required'),
-            ('pending', 'Pending Approval'),
-            ('approved', 'Approved'),
-            ('rejected', 'Rejected'),
-        ],
-        string='Approval Status',
-        default='not_required',
-        copy=False,
-    )
 
     discount_approval_required = fields.Boolean(
         string='Discount Approval Required',
@@ -55,6 +43,52 @@ class SaleOrder(models.Model):
         compute='_compute_approval_requirements',
         store=True,
     )
+
+    state = fields.Selection(
+        selection_add=[
+            ('waiting_approval', 'Waiting Approval'),
+            ('sale',),
+        ],
+        ondelete={
+            'waiting_approval': 'set default',
+        },
+    )
+
+    def action_confirm(self):
+        """ Standard Confirm Button """
+        for order in self:
+            # 1. If no approval is required -> Convert immediately to Sales Order
+            if not order.approval_required:
+                return super(SaleOrder, order).action_confirm()
+
+            # 2. If approval is required -> Change state to "Waiting Approval"
+            order.write({'state': 'waiting_approval'})
+
+            # Format reasons with line breaks for Chatter
+            formatted_reasons = order.approval_reason.replace('\n', '<br/>') if order.approval_reason else ''
+
+            order.message_post(
+                body=_(
+                    "<b>Order blocked and pending management approval due to the following reasons:</b><br/>%s"
+                ) % formatted_reasons
+            )
+        return True
+
+    def action_approve_order(self):
+        """Approve the order and confirm it."""
+        for order in self:
+            if order.state != 'waiting_approval':
+                continue
+
+            order.write({'state': 'draft'})
+
+            super(SaleOrder, order).action_confirm()
+
+            order.message_post(
+                body=_("Sales Order has been approved and confirmed.")
+            )
+
+        return True
 
     @api.depends(
         'partner_id',
@@ -200,18 +234,3 @@ class SaleOrder(models.Model):
             )
 
             order.approval_reason = '\n'.join(reasons)
-
-    def action_confirm(self):
-        orders_to_confirm = self.env['sale.order']
-
-        for order in self:
-
-            if order.approval_required and order.approval_state != 'approved':
-                order.approval_state = 'pending'
-            else:
-                orders_to_confirm |= order
-
-        if orders_to_confirm:
-            return super(SaleOrder, orders_to_confirm).action_confirm()
-
-        return True

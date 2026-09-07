@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_order_form_inherit_approval" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.approval</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+            <!-- تحديث ترتيب ظهور الحالات بالشريط العلوي بوضع waiting_approval قبل sale -->
+            <xpath expr="//field[@name='state']" position="attributes">
+                <attribute name="statusbar_visible">draft,sent,waiting_approval,sale</attribute>
+            </xpath>
+
+            <!-- إظهار زر الموافقات في حالة waiting_approval فقط -->
+            <xpath expr="//header" position="inside">
+                <button name="action_approve_order"
+                        string="Approve Order"
+                        type="object"
+                        class="btn-primary"
+                        invisible="state != 'waiting_approval'"/>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>
